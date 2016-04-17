@@ -23,15 +23,14 @@ public class MovePlayer : MonoBehaviour {
             {
                 //plano x
                 rb.AddForce(new Vector3(radiusCenter.x, 0, 0), ForceMode.Acceleration); //Physics.gravity
-                //transform.rotation.SetLookRotation(new Vector3(1, 0, 0), new Vector3(radiusCenter.x, 0, 0));
                 if (radiusCenter.x > 0) transform.rotation = Quaternion.Euler(0, 0, 90);
                 else transform.rotation = Quaternion.Euler(0, 0, -90);
             }
             else
             {
                 rb.AddForce(new Vector3(0, 0, radiusCenter.z), ForceMode.Acceleration); //plano z
-                //transform.rotation.SetLookRotation(new Vector3(0, 0, 1), new Vector3(0, 0, radiusCenter.z));
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                if (radiusCenter.z > 0) transform.rotation = Quaternion.Euler(-90, 0, 0);
+                else transform.rotation = Quaternion.Euler(90, 0, 0);
             }
         }
         else if (Mathf.Abs(radiusCenter.y) > Mathf.Abs(radiusCenter.z))
@@ -43,8 +42,8 @@ public class MovePlayer : MonoBehaviour {
 
         else {
             rb.AddForce(new Vector3(0, 0, radiusCenter.z), ForceMode.Acceleration); //plano z
-            //transform.rotation.SetLookRotation(new Vector3(0, 0, 1), new Vector3(0, 0, radiusCenter.z));
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            if (radiusCenter.z > 0) transform.rotation = Quaternion.Euler(-90, 0, 0);
+            else transform.rotation = Quaternion.Euler(90, 0, 0);
         }
 
 
@@ -54,7 +53,7 @@ public class MovePlayer : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-        
+        //x move
         if (Input.GetKey(KeyCode.LeftArrow)){
             currentSpeed.x = -(10f);
         }
@@ -64,8 +63,19 @@ public class MovePlayer : MonoBehaviour {
         }
         else currentSpeed.x = 0;
 
+        //z moves (vertical)
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            currentSpeed.z = -(10f);
+        }
+        else if (Input.GetKey(KeyCode.UpArrow))
+        {
+            currentSpeed.z = 10f;
+        }
+        else currentSpeed.z = 0;
+
         //move packman
         this.transform.Translate(Time.fixedDeltaTime * currentSpeed.x, Time.fixedDeltaTime * currentSpeed.y,
-            Time.fixedDeltaTime * currentSpeed.z, Space.Self);
+            Time.fixedDeltaTime * currentSpeed.z);
 	}
 }
