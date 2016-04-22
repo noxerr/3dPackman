@@ -15,7 +15,9 @@ public class FollowPac : MonoBehaviour {
                                               target.transform.position.y + yOffset,
                                               target.transform.position.z + zOffset);*/
         //transform.position = target.transform.position + offsets;
-        transform.position = target.transform.position + relativePos;
+        /*transform.position.Set(target.transform.position.x + relativePos.x, transform.position.y, 
+            target.transform.position.z + relativePos.z);*/
+        //transform.position.z = target.transform.position.z + relativePos.z;
         //Debug.Log(relativePos);
         //Debug.Log(offsets);
     }
