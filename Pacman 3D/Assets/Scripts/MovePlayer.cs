@@ -59,9 +59,9 @@ public class MovePlayer : MonoBehaviour {
         }
 
         //cameraScene.transform.rotation = Quaternion.Euler(( 180 * (transform.position.z - boxMin.z) / width), 0, 0);
-        newPos = new Vector3(0, Mathf.Sin(cameraScene.transform.eulerAngles.x * Mathf.Deg2Rad) * 35 + 25,
+        /*newPos = new Vector3(0, Mathf.Sin(cameraScene.transform.eulerAngles.x * Mathf.Deg2Rad) * 35 + 25,
             Mathf.Sin((cameraScene.transform.eulerAngles.x-90)* Mathf.Deg2Rad) * 35);
-        cameraScene.transform.position = newPos;
+        cameraScene.transform.position = newPos;*/
         /*Debug.Log(Mathf.Sin(cameraScene.transform.rotation.x) * 35);
         Debug.Log(cameraScene.transform.rotation.eulerAngles.x * Mathf.Deg2Rad);
         Debug.Log(Mathf.Sin(90* Mathf.Deg2Rad));*/
