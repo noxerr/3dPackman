@@ -2,11 +2,8 @@
 using System.Collections;
 
 public class FollowPac : MonoBehaviour {
-    public GameObject target;
-    /*public float xOffset = 0;
-    public float yOffset = 0;
-    public float zOffset = 0;
-    Vector3 offsets;*/
+    public GameObject pacman;
+    
     Vector3 relativePos;
 
     void LateUpdate()
@@ -14,7 +11,7 @@ public class FollowPac : MonoBehaviour {
         /*this.transform.position = new Vector3(target.transform.position.x + xOffset,
                                               target.transform.position.y + yOffset,
                                               target.transform.position.z + zOffset);*/
-        //transform.position = target.transform.position + offsets;
+        transform.position = pacman.transform.position + relativePos;
         /*transform.position.Set(target.transform.position.x + relativePos.x, transform.position.y, 
             target.transform.position.z + relativePos.z);*/
         //transform.position.z = target.transform.position.z + relativePos.z;
@@ -25,7 +22,7 @@ public class FollowPac : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //offsets = new Vector3(xOffset, yOffset, zOffset);
-        relativePos = transform.position - target.transform.position;
+        relativePos = transform.position - pacman.transform.position;
 	}
 	
 	// Update is called once per frame
