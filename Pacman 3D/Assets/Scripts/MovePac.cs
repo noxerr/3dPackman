@@ -35,6 +35,9 @@ public class MovePac : MonoBehaviour {
         }
         else currentSpeed.z = 0;
 
+        //apply gravity
+        rb.AddForce(new Vector3(0, -19.8f, 0), ForceMode.Force);
+
         //move packman
         this.transform.Translate(Time.fixedDeltaTime * currentSpeed.x, Time.fixedDeltaTime * currentSpeed.y,
             Time.fixedDeltaTime * currentSpeed.z, Space.World);
