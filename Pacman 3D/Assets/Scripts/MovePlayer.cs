@@ -11,7 +11,7 @@ public class MovePlayer : MonoBehaviour {
     private Rigidbody rb;
     private Vector3 boxLength;
     private float width;
-    private Vector3 boxMin;
+    //private Vector3 boxMin;
     private Vector3 newPos;
 
 	void Start () {
@@ -24,7 +24,7 @@ public class MovePlayer : MonoBehaviour {
         //Debug.Log(sizes);
         //platformCube.GetComponent<Renderer>().bounds.center;
         width = boxLength.z;
-        boxMin = platformCube.GetComponent<Renderer>().bounds.min;
+      //  boxMin = platformCube.GetComponent<Renderer>().bounds.min;
 	}
 
     void Update()
