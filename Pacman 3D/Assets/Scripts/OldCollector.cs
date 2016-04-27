@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Collector : MonoBehaviour {
+public class OldCollector : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

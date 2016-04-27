@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovePlayer : MonoBehaviour {
+public class OldMovePlayer : MonoBehaviour
+{
     public GameObject platformCube;
     public GameObject cameraScene;
 	// Use this for initialization
@@ -9,8 +10,8 @@ public class MovePlayer : MonoBehaviour {
     private Vector3 platformCenter;
     private Vector3 radiusCenter;
     private Rigidbody rb;
-    private Vector3 boxLength;
-    private float width;
+    //private Vector3 boxLength;
+    //private float width;
     //private Vector3 boxMin;
     private Vector3 newPos;
 
@@ -20,10 +21,10 @@ public class MovePlayer : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         //RectTransform rt = (RectTransform)platformCube.transform;
         //platformCube.GetComponent.<Renderer>().bounds.size
-        boxLength = platformCube.GetComponent<Renderer>().bounds.size;
+        //boxLength = platformCube.GetComponent<Renderer>().bounds.size;
         //Debug.Log(sizes);
         //platformCube.GetComponent<Renderer>().bounds.center;
-        width = boxLength.z;
+        //width = boxLength.z;
       //  boxMin = platformCube.GetComponent<Renderer>().bounds.min;
 	}
 

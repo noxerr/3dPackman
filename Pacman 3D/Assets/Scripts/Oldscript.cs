@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class script : MonoBehaviour {
+public class Oldscript : MonoBehaviour
+{
 
 	// Use this for initialization
 	void Start () {

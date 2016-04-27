@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class CoinLogic : MonoBehaviour {
-    public GameObject player;
+    //public GameObject player;
 	// Use this for initialization
 	void Start () {
 	
@@ -13,10 +13,10 @@ public class CoinLogic : MonoBehaviour {
         transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime * 3);
 
     }
-    void OnCollisionEnter(Collision col)
+    /*void OnTriggerEnter(Collision col)
     {
         if (col.gameObject.name == player.gameObject.name) {
             Destroy(this.gameObject);
         }
-    }
+    }*/
 }

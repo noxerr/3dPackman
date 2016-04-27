@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovePac : MonoBehaviour {
+public class OldMovePac : MonoBehaviour
+{
     private Vector3 currentSpeed;
     private Rigidbody rb;
     // Use this for initialization
