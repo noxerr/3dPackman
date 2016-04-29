@@ -1,0 +1,114 @@
+# 3ds Max Wavefront OBJ Exporter v0.94b - (c)2007 guruware
+# File Created: 10.06.2010 18:49:31
+
+newmtl Pac_Man_Jr__Red
+	Ns 28.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 0.0471 0.0000
+	Ks 0.4860 0.4860 0.4860
+	Ke 0.0000 0.0000 0.0000
+
+newmtl Pac_Man_Black
+	Ns 26.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl Pac_Man_Jr__White
+	Ns 10.0830
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.3960 0.3960 0.3960
+	Ke 0.0000 0.0000 0.0000
+
+newmtl Pac_Man_Tongue
+	Ns 10.0830
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Kd F:\Softwrap\YOYOGAMESGM70FINAL\Pre Nuke HD files\Public Documents\Documents\Spriter's resource\Models\Othe peoples submissions\Techokami's site's models\Pac Man World Rally\Player Characters\Pac-Man Jr\Image_2D_0020_0022.png
+
+newmtl Pac_Man_Body
+	Ns 50.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.8820 0.8820 0.8820
+	Ke 0.0000 0.0000 0.0000
+	map_Kd F:\Softwrap\YOYOGAMESGM70FINAL\Pre Nuke HD files\Public Documents\Documents\Spriter's resource\Models\Othe peoples submissions\Techokami's site's models\Pac Man World Rally\Player Characters\Pac-Man Jr\Image_2D_0005_0017.png
+
+newmtl Pac_Man_Jr__Hat
+	Ns 10.0830
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.1098 0.1765 0.5176
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl Pac_Man_Shoes
+	Ns 10.0830
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Kd F:\Softwrap\YOYOGAMESGM70FINAL\Pre Nuke HD files\Public Documents\Documents\Spriter's resource\Models\Othe peoples submissions\Techokami's site's models\Pac Man World Rally\Player Characters\Pac-Man Jr\Image_2D_0014_0018.png
+
+newmtl Pac_Man_Eye
+	Ns 10.0830
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Kd F:\Softwrap\YOYOGAMESGM70FINAL\Pre Nuke HD files\Public Documents\Documents\Spriter's resource\Models\Othe peoples submissions\Techokami's site's models\Pac Man World Rally\Player Characters\Pac-Man Jr\Image_2D_0015_0019.png
+
+newmtl ColorMaterial_B1581A00_fx
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 1.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.6941 0.3451 0.1020
+	Ks 0.2000 0.2000 0.2000
+	Ke 0.0000 0.0000 0.0000

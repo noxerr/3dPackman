@@ -4,12 +4,13 @@ using System.Collections;
 
 public class PlayerLogic : MonoBehaviour {
     private Rigidbody rb;
-    public float constante = 2f;
+    public float constante = 25f;
     private bool flechasLados, flechasRectas;
     private bool colisionSuelo, colisionRampa;
     private int count;
     public Text countText;
     public Text winText;
+    private Vector3 velocidad;
 
 
 	// Use this for initialization
@@ -17,7 +18,7 @@ public class PlayerLogic : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         flechasLados = false;
         flechasRectas = false;
-        colisionSuelo = true;
+        colisionSuelo = false;
         colisionRampa = false;
         count = 0;
         SetCountText();
@@ -33,38 +34,58 @@ public class PlayerLogic : MonoBehaviour {
         {
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                flechasLados = true;
-                rb.AddForce(new Vector3(-1.0f, 0.0f, 0.0f) * constante, ForceMode.VelocityChange);
+                //flechasLados = true;
+                //rb.velocity = new Vector3(-1.0f * constante, rb.velocity.y, rb.velocity.z);
+                //rb.velocity = new Vector3(-1.0f * constante, 0, 0);
+                //rb.AddForce(new Vector3(-1.0f, 0.0f, 0.0f) * constante, ForceMode.VelocityChange);
+                velocidad = new Vector3(-1.0f * constante, rb.velocity.y, 0);
             }
             else if (Input.GetKey(KeyCode.RightArrow))
             {
-                flechasLados = true;
-                rb.AddForce(new Vector3(1.0f, 0.0f, 0.0f) * constante, ForceMode.VelocityChange);
+                //flechasLados = true;
+                //rb.velocity = new Vector3(1.0f * constante, rb.velocity.y, rb.velocity.z);
+               // rb.velocity = new Vector3(1.0f * constante, 0, 0);
+                //rb.AddForce(new Vector3(1.0f, 0.0f, 0.0f) * constante, ForceMode.VelocityChange);
+                velocidad = new Vector3(1.0f * constante, rb.velocity.y, 0);
             }
-            else if (flechasLados == true) //PARA QUE FRENE MAS RAPIDO
+            /*else if (flechasLados == true) //PARA QUE FRENE MAS RAPIDO
             {
                 rb.AddForce(new Vector3(-rb.velocity.x * 0.7f, 0, 0), ForceMode.VelocityChange);
                 flechasLados = false;
-            }
+            }*/
 
 
 
             //z moves (vertical)
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                flechasRectas = true;
-                rb.AddForce(new Vector3(0.0f, 0.0f, -1.0f) * constante, ForceMode.VelocityChange);
+                //flechasRectas = true;
+                //rb.AddForce(new Vector3(0.0f, 0.0f, -1.0f) * constante, ForceMode.VelocityChange);
+                //rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -1.0f * constante);
+                //rb.velocity = new Vector3(0, 0, -1.0f * constante);
+                velocidad = new Vector3(0, rb.velocity.y, -1.0f * constante);
             }
             else if (Input.GetKey(KeyCode.UpArrow))
             {
-                flechasRectas = true;
-                rb.AddForce(new Vector3(0.0f, 0.0f, 1.0f) * constante, ForceMode.VelocityChange);
+                //flechasRectas = true;
+                //rb.AddForce(new Vector3(0.0f, 0.0f, 1.0f) * constante, ForceMode.VelocityChange);
+                //rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 1.0f * constante);
+                //rb.velocity = new Vector3(0, 0, 1.0f * constante);
+                velocidad = new Vector3(0, rb.velocity.y, 1.0f * constante);
             }
-            else if (flechasRectas == true) //PARA QUE FRENE MAS RAPIDO
+            /*else if (flechasRectas == true) //PARA QUE FRENE MAS RAPIDO
             {
                 rb.AddForce(new Vector3(0, 0, -rb.velocity.z * 0.7f), ForceMode.VelocityChange);
                 flechasRectas = false;
             }
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                rb.velocity = new Vector3(0, 50, 0);
+               // rb.AddForce(new Vector3(-1.0f, 0.0f, 0.0f) * constante, ForceMode.VelocityChange);
+            }*/
+            rb.velocity = velocidad;
+
         }
 
 
