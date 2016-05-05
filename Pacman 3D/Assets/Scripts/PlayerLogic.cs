@@ -11,6 +11,8 @@ public class PlayerLogic : MonoBehaviour {
     public Text countText;
     public Text winText;
     private Vector3 velocidad;
+    private Transform papa;
+    private Vector3 transformOffset;
 
 
 	// Use this for initialization
@@ -24,7 +26,10 @@ public class PlayerLogic : MonoBehaviour {
         SetCountText();
         winText.text = "";
         GetComponent<Collider>().material.staticFriction = 0.0f;
-	}
+        papa = gameObject.transform.parent;
+        transformOffset = gameObject.transform.localPosition;
+
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -90,6 +95,8 @@ public class PlayerLogic : MonoBehaviour {
 
 
         rb.AddForce(new Vector3(0.0f, -30.0f, 0.0f)); //gravedad aumentada
+
+        //papa.position = transform.position - transformOffset;
     }
 
     void OnTriggerEnter(Collider col)
