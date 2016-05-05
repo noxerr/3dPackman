@@ -5,29 +5,29 @@ using System.Collections;
 public class PlayerLogic : MonoBehaviour {
     private Rigidbody rb;
     public float constante = 25f;
-    private bool flechasLados, flechasRectas;
+    //private bool flechasLados, flechasRectas;
     private bool colisionSuelo, colisionRampa;
     private int count;
     public Text countText;
     public Text winText;
     private Vector3 velocidad;
-    private Transform papa;
-    private Vector3 transformOffset;
+    //private Transform papa;
+    //private Vector3 transformOffset;
 
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
-        flechasLados = false;
-        flechasRectas = false;
+        //flechasLados = false;
+        //flechasRectas = false;
         colisionSuelo = false;
         colisionRampa = false;
         count = 0;
         SetCountText();
         winText.text = "";
         GetComponent<Collider>().material.staticFriction = 0.0f;
-        papa = gameObject.transform.parent;
-        transformOffset = gameObject.transform.localPosition;
+        //papa = gameObject.transform.parent;
+        //transformOffset = gameObject.transform.localPosition;
 
     }
 	
