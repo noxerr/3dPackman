@@ -626,7 +626,7 @@ Prefab:
     - target: {fileID: 11474054, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
       propertyPath: goal
       value: 
-      objectReference: {fileID: 1420898341}
+      objectReference: {fileID: 828740202}
     - target: {fileID: 19539580, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
       propertyPath: m_Speed
       value: 25
@@ -642,6 +642,10 @@ Prefab:
     - target: {fileID: 19539580, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
       propertyPath: m_Acceleration
       value: 999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 19539580, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
+      propertyPath: m_AutoRepath
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}

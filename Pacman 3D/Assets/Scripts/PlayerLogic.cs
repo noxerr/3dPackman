@@ -11,6 +11,7 @@ public class PlayerLogic : MonoBehaviour {
     public Text countText;
     public Text winText;
     private Vector3 velocidad;
+    private float gradosDireccion, oldGradosDireccion;
     //private Transform papa;
     //private Vector3 transformOffset;
 
@@ -26,6 +27,8 @@ public class PlayerLogic : MonoBehaviour {
         SetCountText();
         winText.text = "";
         GetComponent<Collider>().material.staticFriction = 0.0f;
+        gradosDireccion = 0;
+        oldGradosDireccion = 0;
         //papa = gameObject.transform.parent;
         //transformOffset = gameObject.transform.localPosition;
 
@@ -44,6 +47,8 @@ public class PlayerLogic : MonoBehaviour {
                 //rb.velocity = new Vector3(-1.0f * constante, 0, 0);
                 //rb.AddForce(new Vector3(-1.0f, 0.0f, 0.0f) * constante, ForceMode.VelocityChange);
                 velocidad = new Vector3(-1.0f * constante, rb.velocity.y, 0);
+                if (gradosDireccion != 90) oldGradosDireccion = gradosDireccion;
+                gradosDireccion = 90;
             }
             else if (Input.GetKey(KeyCode.RightArrow))
             {
@@ -52,6 +57,8 @@ public class PlayerLogic : MonoBehaviour {
                // rb.velocity = new Vector3(1.0f * constante, 0, 0);
                 //rb.AddForce(new Vector3(1.0f, 0.0f, 0.0f) * constante, ForceMode.VelocityChange);
                 velocidad = new Vector3(1.0f * constante, rb.velocity.y, 0);
+                if (gradosDireccion != 270) oldGradosDireccion = gradosDireccion;
+                gradosDireccion = 270;
             }
             /*else if (flechasLados == true) //PARA QUE FRENE MAS RAPIDO
             {
@@ -69,6 +76,8 @@ public class PlayerLogic : MonoBehaviour {
                 //rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -1.0f * constante);
                 //rb.velocity = new Vector3(0, 0, -1.0f * constante);
                 velocidad = new Vector3(0, rb.velocity.y, -1.0f * constante);
+                if (gradosDireccion != 0) oldGradosDireccion = gradosDireccion;
+                gradosDireccion = 0;
             }
             else if (Input.GetKey(KeyCode.UpArrow))
             {
@@ -77,6 +86,8 @@ public class PlayerLogic : MonoBehaviour {
                 //rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 1.0f * constante);
                 //rb.velocity = new Vector3(0, 0, 1.0f * constante);
                 velocidad = new Vector3(0, rb.velocity.y, 1.0f * constante);
+                if (gradosDireccion != 180) oldGradosDireccion = gradosDireccion;
+                gradosDireccion = 180;
             }
             /*else if (flechasRectas == true) //PARA QUE FRENE MAS RAPIDO
             {
@@ -92,8 +103,23 @@ public class PlayerLogic : MonoBehaviour {
             rb.velocity = velocidad;
 
         }
-
-
+        if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 10)
+        {
+            if (gradosDireccion - oldGradosDireccion > 180)
+                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion - 360, 0) * Time.deltaTime * 3);
+            else if (gradosDireccion - oldGradosDireccion < -180)
+                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion + 360, 0) * Time.deltaTime * 3);
+            else transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion, 0) * Time.deltaTime * 1);
+        }
+        if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 3)
+        {
+            if (gradosDireccion - oldGradosDireccion > 180)
+                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion - 360, 0) * Time.deltaTime * 0.8f);
+            else if (gradosDireccion - oldGradosDireccion < -180)
+                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion + 360, 0) * Time.deltaTime * 0.8f);
+            else transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion, 0) * Time.deltaTime * 1);
+        }
+        //Debug.Log("Euler: " + transform.eulerAngles.y + ". gradosDireccion: " + gradosDireccion + ". oldGradosDireccion: " + oldGradosDireccion);
         rb.AddForce(new Vector3(0.0f, -30.0f, 0.0f)); //gravedad aumentada
 
         //papa.position = transform.position - transformOffset;
