@@ -127,11 +127,26 @@ public class PlayerLogic : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Pick Up") {
+        if (col.gameObject.tag == "Pick Up")
+        {
             Destroy(col.gameObject);
             count = count + 1;
             SetCountText();
-        } 
+            EnemyLogic[] enemies = GameObject.Find("Enemies").GetComponentsInChildren<EnemyLogic>();
+            foreach (EnemyLogic enemy in enemies)
+            {
+                enemy.canBeEaten = false;
+            }
+        }
+        else if (col.gameObject.tag == "PowerUpCome") {
+            Destroy(col.gameObject);
+            EnemyLogic[] enemies = GameObject.Find("Enemies").GetComponentsInChildren<EnemyLogic>();
+            foreach (EnemyLogic enemy in enemies)
+            {
+                enemy.canBeEaten = true;
+            }
+
+        }
     }
 
 

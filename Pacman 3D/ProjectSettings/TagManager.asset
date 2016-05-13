@@ -7,6 +7,9 @@ TagManager:
   - Pick Up
   - Terrain
   - Rampa
+  - Fire
+  - PowerUpCome
+  - hierba
   layers:
   - Default
   - TransparentFX
