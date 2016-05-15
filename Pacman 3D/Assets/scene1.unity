@@ -595,6 +595,14 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 148674, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 13621978, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11474054, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
@@ -4324,6 +4332,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   constante: 40
+  vidas: 3
+  godMode: 0
   countText: {fileID: 1394846573}
   winText: {fileID: 2008071343}
 --- !u!1 &853450998
@@ -4486,6 +4496,22 @@ Prefab:
     - target: {fileID: 2328008, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 148674, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 13621978, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 148674, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 13621978, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11474054, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
@@ -6173,6 +6199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   constante: 55
+  vidas: 0
+  godMode: 0
   countText: {fileID: 1394846573}
   winText: {fileID: 2008071343}
 --- !u!54 &1137647559
@@ -7035,6 +7063,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   constante: 40
+  vidas: 0
+  godMode: 0
   countText: {fileID: 1394846573}
   winText: {fileID: 2008071343}
 --- !u!54 &1420898343

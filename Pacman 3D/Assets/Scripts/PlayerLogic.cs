@@ -5,6 +5,8 @@ using System.Collections;
 public class PlayerLogic : MonoBehaviour {
     private Rigidbody rb;
     public float constante = 25f;
+    public int vidas;
+    public bool godMode;
     //private bool flechasLados, flechasRectas;
     private bool colisionSuelo, colisionRampa;
     private int count;
@@ -12,6 +14,7 @@ public class PlayerLogic : MonoBehaviour {
     public Text winText;
     private Vector3 velocidad;
     private float gradosDireccion, oldGradosDireccion;
+    private float lastHitTime;
     //private Transform papa;
     //private Vector3 transformOffset;
 
@@ -23,6 +26,7 @@ public class PlayerLogic : MonoBehaviour {
         //flechasRectas = false;
         colisionSuelo = false;
         colisionRampa = false;
+        lastHitTime = Time.time;
         count = 0;
         SetCountText();
         winText.text = "";
@@ -37,6 +41,12 @@ public class PlayerLogic : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        //gestion hits
+        if (godMode)
+        {
+            float d2 = Time.time;
+            if (d2 - lastHitTime > 1.5f) godMode = false;
+        }
         //float moveHorizontal = Input.GetAxis("Horizontal");
         if (colisionSuelo == true)
         {
@@ -138,14 +148,24 @@ public class PlayerLogic : MonoBehaviour {
                 enemy.canBeEaten = false;
             }
         }
-        else if (col.gameObject.tag == "PowerUpCome") {
+        else if (col.gameObject.tag == "PowerUpCome")
+        {
             Destroy(col.gameObject);
             EnemyLogic[] enemies = GameObject.Find("Enemies").GetComponentsInChildren<EnemyLogic>();
             foreach (EnemyLogic enemy in enemies)
             {
                 enemy.canBeEaten = true;
             }
+        }
+        else if (col.gameObject.tag == "Enemy") {
+            if (col.gameObject.GetComponent<EnemyLogic>().canBeEaten)
+            {
+                col.gameObject.active = false;
+            }
+            else if (!godMode) --vidas;
 
+            godMode = true;
+            lastHitTime = Time.time;
         }
     }
 
