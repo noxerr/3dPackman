@@ -2195,6 +2195,58 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 100022, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: leftLeg
+      objectReference: {fileID: 0}
+    - target: {fileID: 100024, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: rightLeg
+      objectReference: {fileID: 0}
+    - target: {fileID: 100026, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: leftArm
+      objectReference: {fileID: 0}
+    - target: {fileID: 100028, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: rightArm
+      objectReference: {fileID: 0}
+    - target: {fileID: 100030, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: leftBoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 100032, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: rightBoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 100034, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: leftHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 100036, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: rightHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 100042, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: cabezon
+      objectReference: {fileID: 0}
+    - target: {fileID: 100044, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: lengua
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: helice
+      objectReference: {fileID: 0}
+    - target: {fileID: 100018, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: suelaIzq
+      objectReference: {fileID: 0}
+    - target: {fileID: 100020, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Name
+      value: suelaDer
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
   m_IsPrefabParent: 0
@@ -7047,6 +7099,17 @@ MeshFilter:
 GameObject:
   m_PrefabParentObject: {fileID: 100046, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
   m_PrefabInternal: {fileID: 423974384}
+--- !u!114 &1420898340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1420898339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bff52f25fea91349bb59d0f7bd34bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1420898341 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400046, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
