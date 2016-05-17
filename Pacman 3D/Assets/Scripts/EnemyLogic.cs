@@ -9,7 +9,8 @@ public class EnemyLogic : MonoBehaviour {
 	void Start () {
         canBeEaten = false;
         regularIA = gameObject.GetComponent<IASiguePac>();
-        if (regularIA == null | !regularIA.enabled) regularIA = gameObject.GetComponent<IAPatrullaPuntos>();
+        if (!regularIA.enabled) regularIA = gameObject.GetComponent<IAPatrullaPuntos>();
+        if (regularIA == null | !regularIA.enabled) regularIA = gameObject.GetComponent<IAPredicePac>();
         //falta flee IA
 	}
 	
