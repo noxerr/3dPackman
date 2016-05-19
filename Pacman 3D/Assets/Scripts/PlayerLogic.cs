@@ -7,6 +7,8 @@ public class PlayerLogic : MonoBehaviour {
     public float constante = 25f;
     public int vidas;
     public bool godMode;
+
+    public AudioClip destroyCoinSound;
     //private bool flechasLados, flechasRectas;
     private bool colisionSuelo, colisionRampa;
     private int count;
@@ -15,13 +17,15 @@ public class PlayerLogic : MonoBehaviour {
     private Vector3 velocidad;
     private float gradosDireccion, oldGradosDireccion;
     private float lastHitTime;
+    private AudioSource source;
     //private Transform papa;
     //private Vector3 transformOffset;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         rb = GetComponent<Rigidbody>();
+        source = GetComponent<AudioSource>();
         //flechasLados = false;
         //flechasRectas = false;
         colisionSuelo = false;
@@ -139,6 +143,7 @@ public class PlayerLogic : MonoBehaviour {
     {
         if (col.gameObject.tag == "Pick Up")
         {
+            source.PlayOneShot(destroyCoinSound, 1.0f);
             Destroy(col.gameObject);
             count = count + 1;
             SetCountText();
