@@ -30,13 +30,13 @@ public class Animation : MonoBehaviour {
         childs[22].localPosition = new Vector3(childs[22].transform.position.x,
             childs[22].transform.localPosition.y, childs[22].transform.localPosition.z + Mathf.Cos(elapsedTime * 2) * 3);*/
         elapsedTime += Time.deltaTime;
-        childs[1].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 3) * 1.2f);
-        childs[5].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 3) * 1.2f);
-        childs[22].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 3) * 1.2f);
+        childs[1].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 6) * 1.2f);
+        childs[5].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 6) * 1.2f);
+        childs[22].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 6) * 1.2f);
 
-        childs[2].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 3 - Mathf.PI) * 1.2f);
-        childs[6].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 3 - Mathf.PI) * 1.2f);
-        childs[23].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 3 - Mathf.PI) * 1.2f);
+        childs[2].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 6 - Mathf.PI) * 1.2f);
+        childs[6].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 6 - Mathf.PI) * 1.2f);
+        childs[23].localPosition = new Vector3(0, 0, Mathf.Cos(elapsedTime * 6 - Mathf.PI) * 1.2f);
 
         //childs[14].localRotation = Quaternion.AngleAxis(90,new Vector3(0,1,0));
         //childs[14].RotateAround(pivot.position, Vector3.up, 20);

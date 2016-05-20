@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\CoinLogic.cs" />
     <Compile Include="Assets\Scripts\EnemyLogic.cs" />
     <Compile Include="Assets\Scripts\FollowPac.cs" />
+    <Compile Include="Assets\Scripts\Helice.cs" />
     <Compile Include="Assets\Scripts\IAPatrullaPuntos.cs" />
     <Compile Include="Assets\Scripts\IAPredicePac.cs" />
     <Compile Include="Assets\Scripts\IASiguePac.cs" />
@@ -93,5 +94,5 @@
     <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAddSoft.shader" />
     <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2010\UnityVS.CSharp.targets" />
 </Project>

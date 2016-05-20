@@ -117,21 +117,29 @@ public class PlayerLogic : MonoBehaviour {
             rb.velocity = velocidad;
 
         }
-        if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 10)
+        if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 25)
         {
             if (gradosDireccion - oldGradosDireccion > 180)
-                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion - 360, 0) * Time.deltaTime * 3);
+                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion - 360, 0) * Time.deltaTime * 5);
             else if (gradosDireccion - oldGradosDireccion < -180)
-                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion + 360, 0) * Time.deltaTime * 3);
-            else transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion, 0) * Time.deltaTime * 1);
+                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion + 360, 0) * Time.deltaTime * 5);
+            else transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion, 0) * Time.deltaTime * 4);
         }
-        if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 3)
+        else if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 12)
         {
             if (gradosDireccion - oldGradosDireccion > 180)
-                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion - 360, 0) * Time.deltaTime * 0.8f);
+                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion - 360, 0) * Time.deltaTime * 1.8f);
             else if (gradosDireccion - oldGradosDireccion < -180)
-                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion + 360, 0) * Time.deltaTime * 0.8f);
-            else transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion, 0) * Time.deltaTime * 1);
+                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion + 360, 0) * Time.deltaTime * 1.8f);
+            else transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion, 0) * Time.deltaTime * 1.5f);
+        }
+        else if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 5)
+        {
+            if (gradosDireccion - oldGradosDireccion > 180)
+                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion - 360, 0) * Time.deltaTime * 0.4f);
+            else if (gradosDireccion - oldGradosDireccion < -180)
+                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion + 360, 0) * Time.deltaTime * 0.4f);
+            else transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion, 0) * Time.deltaTime * 0.4f);
         }
         //Debug.Log("Euler: " + transform.eulerAngles.y + ". gradosDireccion: " + gradosDireccion + ". oldGradosDireccion: " + oldGradosDireccion);
         rb.AddForce(new Vector3(0.0f, -30.0f, 0.0f)); //gravedad aumentada
