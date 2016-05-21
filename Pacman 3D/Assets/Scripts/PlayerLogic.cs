@@ -20,26 +20,44 @@ public class PlayerLogic : MonoBehaviour {
     private float lastHitTime;
     private AudioSource source;
     private Vector3 translacionFinal;
+    private float rotacionInicialCamara, yRelativaCamara, zRelativaCamara;
     private int numTranslaciones;
+    private AnimationPiernas piernas;
+    public GameObject fire;
+    private BoxCollider boxColider;
+    private FollowPac cameraPacScript;
+    public GameObject mainCameraObject;
     //private Transform papa;
     //private Vector3 transformOffset;
 
 
     // Use this for initialization
     void Start () {
+        
         numTranslaciones = 0;
         won = lost = translated = false;
-        rb = GetComponent<Rigidbody>();
-        source = GetComponent<AudioSource>();
+        
         //flechasLados = false;
         //flechasRectas = false;
         colisionSuelo = false;
         colisionRampa = false;
         lastHitTime = Time.time;
+
         count = 0;
         SetCountText();
         winText.text = "";
+
         GetComponent<Collider>().material.staticFriction = 0.0f;
+        cameraPacScript = mainCameraObject.GetComponent<FollowPac>();
+        boxColider = GetComponent<BoxCollider>();
+        piernas = GetComponentInChildren<AnimationPiernas>();
+        rb = GetComponent<Rigidbody>();
+        source = GetComponent<AudioSource>();
+
+        rotacionInicialCamara = -35;//mainCameraObject.transform.rotation.x - 5;
+        yRelativaCamara = cameraPacScript.relativePos.y - 15;
+        zRelativaCamara = cameraPacScript.relativePos.z + 35;
+
         gradosDireccion = 0;
         oldGradosDireccion = 0;
         //papa = gameObject.transform.parent;
@@ -114,11 +132,20 @@ public class PlayerLogic : MonoBehaviour {
             if (!translated)
             {
                 rb.velocity = Vector3.zero;
-                transform.Translate(translacionFinal/21, Space.World);
+                transform.Translate(translacionFinal / 60, Space.World);
                 //transform.Translate(-transform.position.x,-transform.position.y,-transform.position.z-30, Space.World); 
                 //transform.Translate(0,20,0);
-                if (numTranslaciones == 20) translated = true;
+                transform.Rotate(0, 5, 0);
+                cameraPacScript.relativePos.Set(cameraPacScript.relativePos.x, cameraPacScript.relativePos.y - yRelativaCamara/60,
+                    cameraPacScript.relativePos.z - zRelativaCamara / 60);
+                mainCameraObject.transform.Rotate(rotacionInicialCamara/60, 0, 0);
+                if (numTranslaciones == 59) translated = true;
                 else numTranslaciones++;
+            }
+            else
+            {
+                boxColider.enabled = true;
+                fire.SetActive(true);
             }
             //Debug.Log("pos win: " + transform.position);
         }
@@ -180,7 +207,7 @@ public class PlayerLogic : MonoBehaviour {
         else if (col.gameObject.tag == "Enemy") {
             if (col.gameObject.GetComponent<EnemyLogic>().canBeEaten)
             {
-                col.gameObject.active = false;
+                col.gameObject.SetActive(false);
             }
             else if (!godMode) --vidas;
 
@@ -218,10 +245,22 @@ public class PlayerLogic : MonoBehaviour {
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if (count >= 106)//106
+        if (count >= 106 && !won)//106 monedas en lvl 1
         {
+            //to rotate looking down
+            if (gradosDireccion != 0) oldGradosDireccion = gradosDireccion;
+            gradosDireccion = 0;
+
+            //parar animacion piernas
+            piernas.enabled = false;
+            
+            //para que no se choque por el camino al centro
+            boxColider.enabled = false;
+
             won = true;
-            translacionFinal = new Vector3(-transform.position.x, -transform.position.y+20, -transform.position.z - 30);
+
+            //vector de donde ha de ir, para despues dividirlo por el numero de frames que queremos que tarde la translacion
+            translacionFinal = new Vector3(-transform.position.x, -transform.position.y+40, -transform.position.z - 30);
             winText.text = "You Win!";
         }
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Animation : MonoBehaviour {
+public class AnimationPiernas : MonoBehaviour {
     private Transform[] childs;
     private float elapsedTime;
     //private Transform pivot;

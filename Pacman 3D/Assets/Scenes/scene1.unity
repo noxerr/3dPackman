@@ -799,7 +799,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 93856616}
   m_LocalRotation: {x: 0.34202018, y: 0, z: 0, w: 0.9396926}
-  m_LocalPosition: {x: -6.1, y: 88.8, z: -174.5}
+  m_LocalPosition: {x: 0, y: 88.8, z: -174.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -816,6 +816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pacman: {fileID: 828740198}
+  relativePos: {x: 0, y: 0, z: 0}
 --- !u!1 &120048698
 GameObject:
   m_ObjectHideFlags: 0
@@ -5263,6 +5264,8 @@ MonoBehaviour:
   destroyCoinSound: {fileID: 8300000, guid: 582a019dc5341e548be4af82ecebc93e, type: 3}
   countText: {fileID: 1394846573}
   winText: {fileID: 2008071343}
+  fire: {fileID: 887734876}
+  mainCameraObject: {fileID: 93856616}
 --- !u!82 &828740205
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5538,6 +5541,10 @@ Transform:
   - {fileID: 227037215}
   m_Father: {fileID: 1642403986}
   m_RootOrder: 24
+--- !u!1 &887734876 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100002, guid: 180149b1a35449044a27b451e816d2de, type: 2}
+  m_PrefabInternal: {fileID: 1593981304}
 --- !u!1 &894069979
 GameObject:
   m_ObjectHideFlags: 0
@@ -7494,6 +7501,8 @@ MonoBehaviour:
   destroyCoinSound: {fileID: 0}
   countText: {fileID: 1394846573}
   winText: {fileID: 2008071343}
+  fire: {fileID: 0}
+  mainCameraObject: {fileID: 0}
 --- !u!54 &1137647559
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8692,6 +8701,8 @@ MonoBehaviour:
   destroyCoinSound: {fileID: 0}
   countText: {fileID: 1394846573}
   winText: {fileID: 2008071343}
+  fire: {fileID: 0}
+  mainCameraObject: {fileID: 0}
 --- !u!54 &1420898343
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9616,15 +9627,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: 180149b1a35449044a27b451e816d2de, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 10.568454
+      value: 12.56
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 180149b1a35449044a27b451e816d2de, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 13.35
+      value: 10.73
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 180149b1a35449044a27b451e816d2de, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 26.6232
+      value: 15.96
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 180149b1a35449044a27b451e816d2de, type: 2}
       propertyPath: m_LocalRotation.x
