@@ -7,6 +7,8 @@ public class PlayerLogic : MonoBehaviour {
     public float constante = 25f;
     public int vidas;
     public bool godMode;
+    public float tiempoInvencible = 1.5f;
+    public float tiempoEntreParpadeos = 0.05f;
 
     public AudioClip destroyCoinSound;
     //private bool flechasLados, flechasRectas;
@@ -17,7 +19,8 @@ public class PlayerLogic : MonoBehaviour {
     public Text winText;
     private Vector3 velocidad;
     private float gradosDireccion, oldGradosDireccion;
-    private float lastHitTime;
+    private float lastHitTime,lastTransitionTime;
+    private bool tocaEsconderte;
     private AudioSource source;
     private Vector3 translacionFinal;
     private float rotacionInicialCamara, yRelativaCamara, zRelativaCamara;
@@ -65,14 +68,38 @@ public class PlayerLogic : MonoBehaviour {
 
     }
 	
+    void Parpadea()
+    {
+        float d2 = Time.time;
+        if (d2 - lastTransitionTime > tiempoEntreParpadeos) {
+            lastTransitionTime = Time.time;
+            tocaEsconderte = !tocaEsconderte;
+        }
+        if (tocaEsconderte) touchRenderers(false);
+        else touchRenderers(true);
+    }
+    void touchRenderers(bool yesno)
+    {
+        MeshRenderer[] renders = gameObject.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer part in renders)
+        {
+            part.enabled = yesno;
+        }
+    }
 	// Update is called once per frame
 	void Update ()
     {
         //gestion hits
         if (godMode)
         {
+            Parpadea();
             float d2 = Time.time;
-            if (d2 - lastHitTime > 1.5f) godMode = false;
+            if (d2 - lastHitTime > tiempoInvencible)
+            {
+                godMode = false;
+                tocaEsconderte = false;
+                touchRenderers(true);
+            }
         }
         //float moveHorizontal = Input.GetAxis("Horizontal");
         if (!lost && !won){
@@ -189,11 +216,6 @@ public class PlayerLogic : MonoBehaviour {
             Destroy(col.gameObject);
             count = count + 1;
             SetCountText();
-            EnemyLogic[] enemies = GameObject.Find("Enemies").GetComponentsInChildren<EnemyLogic>();
-            foreach (EnemyLogic enemy in enemies)
-            {
-                enemy.canBeEaten = false;
-            }
         }
         else if (col.gameObject.tag == "PowerUpCome")
         {
@@ -202,6 +224,7 @@ public class PlayerLogic : MonoBehaviour {
             foreach (EnemyLogic enemy in enemies)
             {
                 enemy.canBeEaten = true;
+                enemy.startEatenTimer();
             }
         }
         else if (col.gameObject.tag == "Enemy") {
@@ -212,6 +235,8 @@ public class PlayerLogic : MonoBehaviour {
             else if (!godMode) --vidas;
 
             godMode = true;
+            tocaEsconderte = true;
+            lastTransitionTime = Time.time;
             lastHitTime = Time.time;
         }
     }

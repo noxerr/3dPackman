@@ -631,7 +631,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 492580, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 76
+      value: 61.6
       objectReference: {fileID: 0}
     - target: {fileID: 492580, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
       propertyPath: m_LocalPosition.y
@@ -639,7 +639,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 492580, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 30.6
+      value: -111.4
       objectReference: {fileID: 0}
     - target: {fileID: 492580, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
       propertyPath: m_LocalRotation.x
@@ -711,6 +711,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 13621978, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 148674, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -2644,6 +2648,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2300022, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: efe7755416c8fc941ae73ec6aa5da5d9, type: 3}
   m_IsPrefabParent: 0
@@ -3636,6 +3644,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SetOfPoints: {fileID: 1849559970}
+--- !u!114 &550904858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 550904855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6f56c2e823ec9a40b7c2bdccfc2ac2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goal: {fileID: 828740202}
 --- !u!4 &550904863 stripped
 Transform:
   m_PrefabParentObject: {fileID: 492580, guid: cde03c0d1dd290948a3cd1da950b1557, type: 2}
@@ -3652,6 +3672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeEaten: 0
+  canBeEatenTime: 7
 --- !u!4 &560794862
 Transform:
   m_ObjectHideFlags: 0
@@ -5261,6 +5282,8 @@ MonoBehaviour:
   constante: 60
   vidas: 3
   godMode: 0
+  tiempoInvencible: 1.5
+  tiempoEntreParpadeos: 0.09
   destroyCoinSound: {fileID: 8300000, guid: 582a019dc5341e548be4af82ecebc93e, type: 3}
   countText: {fileID: 1394846573}
   winText: {fileID: 2008071343}
@@ -7498,6 +7521,8 @@ MonoBehaviour:
   constante: 55
   vidas: 0
   godMode: 0
+  tiempoInvencible: 0
+  tiempoEntreParpadeos: 0
   destroyCoinSound: {fileID: 0}
   countText: {fileID: 1394846573}
   winText: {fileID: 2008071343}
@@ -8698,6 +8723,8 @@ MonoBehaviour:
   constante: 40
   vidas: 0
   godMode: 0
+  tiempoInvencible: 0
+  tiempoEntreParpadeos: 0
   destroyCoinSound: {fileID: 0}
   countText: {fileID: 1394846573}
   winText: {fileID: 2008071343}
@@ -13417,7 +13444,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeEaten: 0
+  canBeEatenTime: 7
 --- !u!114 &2147241426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2147241416}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e4bf027d7c5a394d92bf912d6998b69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goal: {fileID: 828740202}
+  step: 20
+--- !u!114 &2147241427
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -13425,8 +13466,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2147241416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e4bf027d7c5a394d92bf912d6998b69, type: 3}
+  m_Script: {fileID: 11500000, guid: d6f56c2e823ec9a40b7c2bdccfc2ac2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   goal: {fileID: 828740202}
-  step: 20
