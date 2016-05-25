@@ -30,8 +30,6 @@ public class PlayerLogic : MonoBehaviour {
     private BoxCollider boxColider;
     private FollowPac cameraPacScript;
     public GameObject mainCameraObject;
-    //private Transform papa;
-    //private Vector3 transformOffset;
 
 
     // Use this for initialization
@@ -39,9 +37,6 @@ public class PlayerLogic : MonoBehaviour {
         
         numTranslaciones = 0;
         won = lost = translated = false;
-        
-        //flechasLados = false;
-        //flechasRectas = false;
         colisionSuelo = false;
         colisionRampa = false;
         lastHitTime = Time.time;
@@ -63,8 +58,6 @@ public class PlayerLogic : MonoBehaviour {
 
         gradosDireccion = 0;
         oldGradosDireccion = 0;
-        //papa = gameObject.transform.parent;
-        //transformOffset = gameObject.transform.localPosition;
 
     }
 	
@@ -101,39 +94,25 @@ public class PlayerLogic : MonoBehaviour {
                 touchRenderers(true);
             }
         }
-        //float moveHorizontal = Input.GetAxis("Horizontal");
         if (!lost && !won){
             if (colisionSuelo == true)
             {
                 if (Input.GetKey(KeyCode.LeftArrow))
                 {
-                    //flechasLados = true;
-                    //rb.AddForce(new Vector3(-1.0f, 0.0f, 0.0f) * constante, ForceMode.VelocityChange);
                     velocidad = new Vector3(-1.0f * constante, rb.velocity.y, 0);
                     if (gradosDireccion != 90) oldGradosDireccion = gradosDireccion;
                     gradosDireccion = 90;
                 }
                 else if (Input.GetKey(KeyCode.RightArrow))
                 {
-                    //flechasLados = true;
-                    //rb.AddForce(new Vector3(1.0f, 0.0f, 0.0f) * constante, ForceMode.VelocityChange);
                     velocidad = new Vector3(1.0f * constante, rb.velocity.y, 0);
                     if (gradosDireccion != 270) oldGradosDireccion = gradosDireccion;
                     gradosDireccion = 270;
                 }
-                /*else if (flechasLados == true) //PARA QUE FRENE MAS RAPIDO
-                {
-                    rb.AddForce(new Vector3(-rb.velocity.x * 0.7f, 0, 0), ForceMode.VelocityChange);
-                    flechasLados = false;
-                }*/
-
-
 
                 //z moves (vertical)
                 if (Input.GetKey(KeyCode.DownArrow))
                 {
-                    //flechasRectas = true;
-                    //rb.velocity = new Vector3(0, 0, -1.0f * constante);
                     velocidad = new Vector3(0, rb.velocity.y, -1.0f * constante);
                     if (gradosDireccion != 0) oldGradosDireccion = gradosDireccion;
                     gradosDireccion = 0;
@@ -144,11 +123,6 @@ public class PlayerLogic : MonoBehaviour {
                     if (gradosDireccion != 180) oldGradosDireccion = gradosDireccion;
                     gradosDireccion = 180;
                 }
-                /*else if (flechasRectas == true) //PARA QUE FRENE MAS RAPIDO
-                {
-                    rb.AddForce(new Vector3(0, 0, -rb.velocity.z * 0.7f), ForceMode.VelocityChange);
-                    flechasRectas = false;
-                }*/
                 rb.velocity = velocidad;
 
             }
@@ -160,8 +134,6 @@ public class PlayerLogic : MonoBehaviour {
             {
                 rb.velocity = Vector3.zero;
                 transform.Translate(translacionFinal / 60, Space.World);
-                //transform.Translate(-transform.position.x,-transform.position.y,-transform.position.z-30, Space.World); 
-                //transform.Translate(0,20,0);
                 transform.Rotate(0, 5, 0);
                 cameraPacScript.relativePos.Set(cameraPacScript.relativePos.x, cameraPacScript.relativePos.y - yRelativaCamara/60,
                     cameraPacScript.relativePos.z - zRelativaCamara / 60);
@@ -204,8 +176,6 @@ public class PlayerLogic : MonoBehaviour {
         }
         //Debug.Log("Euler: " + transform.eulerAngles.y + ". gradosDireccion: " + gradosDireccion + ". oldGradosDireccion: " + oldGradosDireccion);
         rb.AddForce(new Vector3(0.0f, -30.0f, 0.0f)); //gravedad aumentada
-
-        //papa.position = transform.position - transformOffset;
     }
 
     void OnTriggerEnter(Collider col)
@@ -230,14 +200,16 @@ public class PlayerLogic : MonoBehaviour {
         else if (col.gameObject.tag == "Enemy") {
             if (col.gameObject.GetComponent<EnemyLogic>().canBeEaten)
             {
-                col.gameObject.SetActive(false);
+                col.gameObject.GetComponent<EnemyLogic>().killGhost();
             }
-            else if (!godMode) --vidas;
-
-            godMode = true;
-            tocaEsconderte = true;
-            lastTransitionTime = Time.time;
-            lastHitTime = Time.time;
+            else if (!godMode) {
+                --vidas;
+                godMode = true;
+                tocaEsconderte = true;
+                lastTransitionTime = Time.time;
+                lastHitTime = Time.time;
+            }
+            
         }
     }
 
@@ -263,7 +235,6 @@ public class PlayerLogic : MonoBehaviour {
             colisionRampa = false;
             GetComponent<Collider>().material.dynamicFriction = 0.5f;
         }
-        //print("No longer in contact with " + collisionInfo.transform.name);
     }
 
 

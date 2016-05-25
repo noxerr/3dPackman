@@ -11,10 +11,6 @@ public class IAFlee : MonoBehaviour {
         agent = GetComponent<NavMeshAgent>();
         //offset = new Vector3(25.25f,10.0f ,-168.0f);
         agent.destination = goal.position;// -offset;
-        /*foreach (Transform child in transform)
-        {
-        //child is your child transform
-        }*/
     }
 
     // Update is called once per frame
