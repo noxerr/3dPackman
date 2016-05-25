@@ -9,32 +9,31 @@ public class PlayerLogic : MonoBehaviour {
     public bool godMode;
     public float tiempoInvencible = 1.5f;
     public float tiempoEntreParpadeos = 0.05f;
+    public int NumMonedas;
+    public AudioClip destroyCoinSound, countScoreSound;
+    public GameObject fire, mainCameraObject;
+    public Text countText, winText, finalScoreText;
 
-    public AudioClip destroyCoinSound;
     //private bool flechasLados, flechasRectas;
-    private bool colisionSuelo, colisionRampa;
-    private bool won, lost, translated;
-    private int count;
-    public Text countText;
-    public Text winText;
+    private bool colisionSuelo, colisionRampa, won, lost, translated;
+    private int count, numTranslaciones, monedasPilladas;
+    private float scoreSumado;
     private Vector3 velocidad;
-    private float gradosDireccion, oldGradosDireccion;
-    private float lastHitTime,lastTransitionTime;
+    private float gradosDireccion, oldGradosDireccion, lastHitTime,lastTransitionTime;
     private bool tocaEsconderte;
     private AudioSource source;
     private Vector3 translacionFinal;
     private float rotacionInicialCamara, yRelativaCamara, zRelativaCamara;
-    private int numTranslaciones;
     private AnimationPiernas piernas;
-    public GameObject fire;
     private BoxCollider boxColider;
     private FollowPac cameraPacScript;
-    public GameObject mainCameraObject;
+    private float duracionContarScore;
+    private bool soundFinalPlayed = false;
 
 
     // Use this for initialization
     void Start () {
-        
+        duracionContarScore = countScoreSound.length;
         numTranslaciones = 0;
         won = lost = translated = false;
         colisionSuelo = false;
@@ -42,6 +41,7 @@ public class PlayerLogic : MonoBehaviour {
         lastHitTime = Time.time;
 
         count = 0;
+        monedasPilladas = 0;
         SetCountText();
         winText.text = "";
 
@@ -79,6 +79,8 @@ public class PlayerLogic : MonoBehaviour {
             part.enabled = yesno;
         }
     }
+
+
 	// Update is called once per frame
 	void Update ()
     {
@@ -94,7 +96,9 @@ public class PlayerLogic : MonoBehaviour {
                 touchRenderers(true);
             }
         }
-        if (!lost && !won){
+        //MOVER JUGADOR SI NO SE HA ACABADO LA PARTIDA
+        if (!lost && !won)
+        {
             if (colisionSuelo == true)
             {
                 if (Input.GetKey(KeyCode.LeftArrow))
@@ -127,56 +131,83 @@ public class PlayerLogic : MonoBehaviour {
 
             }
         }
-        
+        //COMPROBAR FIN PARTIDA GANADA
         else if (won)
         {
             if (!translated)
             {
                 rb.velocity = Vector3.zero;
                 transform.Translate(translacionFinal / 60, Space.World);
-                transform.Rotate(0, 5, 0);
-                cameraPacScript.relativePos.Set(cameraPacScript.relativePos.x, cameraPacScript.relativePos.y - yRelativaCamara/60,
+                transform.Rotate(0, 20, 0);
+                cameraPacScript.relativePos.Set(cameraPacScript.relativePos.x, cameraPacScript.relativePos.y - yRelativaCamara / 60,
                     cameraPacScript.relativePos.z - zRelativaCamara / 60);
-                mainCameraObject.transform.Rotate(rotacionInicialCamara/60, 0, 0);
+                mainCameraObject.transform.Rotate(rotacionInicialCamara / 60, 0, 0);
                 if (numTranslaciones == 59) translated = true;
                 else numTranslaciones++;
             }
             else
             {
+                finalScoreText.enabled = true;
+                if (!soundFinalPlayed)
+                {
+                    source.PlayOneShot(countScoreSound, 1f);
+                    soundFinalPlayed = true;
+                }
+                if (source.isPlaying) scoreSumado += Time.deltaTime * count / duracionContarScore;
+                else scoreSumado = count;
+                finalScoreText.text = "Score = " + (int)scoreSumado;
                 boxColider.enabled = true;
                 fire.SetActive(true);
             }
             //Debug.Log("pos win: " + transform.position);
         }
+        else if (lost)
+        {
+            if (rb.velocity.y < 5) rb.velocity = new Vector3(0, -250, 0);
+            AnimacionMuerto();
+        }
         //Debug.Log("pos antes: " + transform.position);
 
+        //ROTACIONES
+        if ((!won || translated) && !lost) gestionRotacionesPacman();
+
+        //Debug.Log("Euler: " + transform.eulerAngles.y + ". gradosDireccion: " + gradosDireccion + ". oldGradosDireccion: " + oldGradosDireccion);
+        rb.AddForce(new Vector3(0.0f, -30.0f, 0.0f)); //gravedad aumentada
+    }
+
+
+
+
+    void gestionRotacionesPacman()
+    {
         if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 25)
         {
             if (gradosDireccion - oldGradosDireccion > 180)
-                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion - 360, 0) * Time.deltaTime * 5);
+                transform.Rotate(0, (gradosDireccion - oldGradosDireccion - 360) * Time.deltaTime * 5, 0);
             else if (gradosDireccion - oldGradosDireccion < -180)
-                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion + 360, 0) * Time.deltaTime * 5);
-            else transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion, 0) * Time.deltaTime * 4);
+                transform.Rotate(0, (gradosDireccion - oldGradosDireccion + 360) * Time.deltaTime * 5, 0);
+            else transform.Rotate(0, (gradosDireccion - oldGradosDireccion) * Time.deltaTime * 4, 0 );
         }
         else if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 12)
         {
             if (gradosDireccion - oldGradosDireccion > 180)
-                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion - 360, 0) * Time.deltaTime * 1.8f);
+                transform.Rotate(0, (gradosDireccion - oldGradosDireccion - 360) * Time.deltaTime * 1.8f, 0);
             else if (gradosDireccion - oldGradosDireccion < -180)
-                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion + 360, 0) * Time.deltaTime * 1.8f);
-            else transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion, 0) * Time.deltaTime * 1.5f);
+                transform.Rotate(0, (gradosDireccion - oldGradosDireccion + 360) * Time.deltaTime * 1.8f, 0);
+            else transform.Rotate(0, (gradosDireccion - oldGradosDireccion) * Time.deltaTime * 1.5f, 0);
         }
         else if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 5)
         {
             if (gradosDireccion - oldGradosDireccion > 180)
-                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion - 360, 0) * Time.deltaTime * 0.4f);
+                transform.Rotate(0, (gradosDireccion - oldGradosDireccion - 360) * Time.deltaTime * 0.4f, 0);
             else if (gradosDireccion - oldGradosDireccion < -180)
-                transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion + 360, 0) * Time.deltaTime * 0.4f);
-            else transform.Rotate(new Vector3(0, gradosDireccion - oldGradosDireccion, 0) * Time.deltaTime * 0.4f);
+                transform.Rotate(0, (gradosDireccion - oldGradosDireccion + 360) * Time.deltaTime * 0.4f, 0);
+            else transform.Rotate(0, (gradosDireccion - oldGradosDireccion)* Time.deltaTime * 0.4f, 0);
         }
-        //Debug.Log("Euler: " + transform.eulerAngles.y + ". gradosDireccion: " + gradosDireccion + ". oldGradosDireccion: " + oldGradosDireccion);
-        rb.AddForce(new Vector3(0.0f, -30.0f, 0.0f)); //gravedad aumentada
     }
+
+
+
 
     void OnTriggerEnter(Collider col)
     {
@@ -184,7 +215,8 @@ public class PlayerLogic : MonoBehaviour {
         {
             source.PlayOneShot(destroyCoinSound, 1.0f);
             Destroy(col.gameObject);
-            count = count + 1;
+            count += 5;
+            monedasPilladas += 1;
             SetCountText();
         }
         else if (col.gameObject.tag == "PowerUpCome")
@@ -201,17 +233,34 @@ public class PlayerLogic : MonoBehaviour {
             if (col.gameObject.GetComponent<EnemyLogic>().canBeEaten)
             {
                 col.gameObject.GetComponent<EnemyLogic>().killGhost();
+                count += 50;
+                SetCountText();
             }
             else if (!godMode) {
                 --vidas;
-                godMode = true;
-                tocaEsconderte = true;
-                lastTransitionTime = Time.time;
-                lastHitTime = Time.time;
+                if (vidas <= 0)
+                {
+                    //parar animacion piernas
+                    piernas.enabled = false;
+                    //para que no se choque por el camino al centro
+                    boxColider.enabled = false;
+                    lost = true;
+                    rb.velocity = new Vector3(0,70,0);
+                    transform.Translate(0,10,0, Space.World);
+                }
+                else
+                {
+                    godMode = true;
+                    tocaEsconderte = true;
+                    lastTransitionTime = Time.time;
+                    lastHitTime = Time.time;
+                }
             }
             
         }
     }
+
+
 
 
     void OnCollisionStay(Collision collisionInfo)
@@ -227,6 +276,8 @@ public class PlayerLogic : MonoBehaviour {
         } 
     }
 
+
+
     void OnCollisionExit(Collision collisionInfo)
     {
         if (collisionInfo.gameObject.tag == "Terrain") colisionSuelo = false;
@@ -238,10 +289,19 @@ public class PlayerLogic : MonoBehaviour {
     }
 
 
+
+    void AnimacionMuerto()
+    {
+        transform.Rotate(15 * Time.deltaTime * 8,
+            30 * Time.deltaTime * 8, 45 * Time.deltaTime * 8);
+    }
+
+
+    //GESTION MONEDAS Y PUNTUACION
     void SetCountText()
     {
-        countText.text = "Count: " + count.ToString();
-        if (count >= 106 && !won)//106 monedas en lvl 1
+        countText.text = "Score: " + count.ToString();
+        if (monedasPilladas >= NumMonedas && !won)//106 monedas en lvl 1
         {
             //to rotate looking down
             if (gradosDireccion != 0) oldGradosDireccion = gradosDireccion;

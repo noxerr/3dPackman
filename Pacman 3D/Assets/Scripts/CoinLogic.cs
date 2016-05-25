@@ -12,6 +12,7 @@ public class CoinLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime * 3);
+        transform.Rotate(15 * Time.deltaTime * 3, 
+            30 * Time.deltaTime * 3, 45 * Time.deltaTime * 3);
     }
 }
