@@ -1752,6 +1752,10 @@ Prefab:
       propertyPath: m_Name
       value: caminoMonedas (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2390436, guid: 821ffdfbd485f8245854bb1957d2128e, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 43127b38141d17d469e2c070828f4ce5, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 821ffdfbd485f8245854bb1957d2128e, type: 2}
   m_IsPrefabParent: 0

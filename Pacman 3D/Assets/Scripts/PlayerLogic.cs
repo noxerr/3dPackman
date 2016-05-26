@@ -301,7 +301,7 @@ public class PlayerLogic : MonoBehaviour {
     void SetCountText()
     {
         countText.text = "Score: " + count.ToString();
-        if (monedasPilladas >= NumMonedas && !won)//106 monedas en lvl 1
+        if (monedasPilladas >= NumMonedas && !won)//108 monedas en lvl 1
         {
             //to rotate looking down
             if (gradosDireccion != 0) oldGradosDireccion = gradosDireccion;
