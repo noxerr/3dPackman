@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\OldMovePlayer.cs" />
     <Compile Include="Assets\Scripts\Oldscript.cs" />
     <Compile Include="Assets\Scripts\PlayerLogic.cs" />
+    <Compile Include="Assets\Scripts\ReCalcCubeTexture.cs" />
     <Compile Include="Assets\Scripts\menuScript.cs" />
     <Compile Include="Assets\Scripts\moveTo.cs" />
   </ItemGroup>
@@ -95,5 +96,5 @@
     <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAddSoft.shader" />
     <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2010\UnityVS.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
