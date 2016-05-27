@@ -21,7 +21,6 @@ public class EnemyLogic : MonoBehaviour {
         fleeIA.enabled = false;
         timeSinceLastEaten = 0.0f;
         lastSpeed = GetComponent<NavMeshAgent>().speed;
-        //falta flee IA
     }
     public void startEatenTimer() {
         timeSinceLastEaten = Time.time;
@@ -34,20 +33,15 @@ public class EnemyLogic : MonoBehaviour {
         lastSpeed = GetComponent<NavMeshAgent>().speed;
         GetComponent<NavMeshAgent>().speed = 80000;
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
-        MeshRenderer[] renders = gameObject.GetComponentsInChildren<MeshRenderer>();
-        foreach (MeshRenderer part in renders)
-        {
-            part.enabled = false;
-        }
+        MeshRenderer rend = gameObject.GetComponentInChildren<MeshRenderer>();
+        rend.enabled = false;
+        
     }
     public void spawnGhost() {
         GetComponent<NavMeshAgent>().speed = lastSpeed;
         gameObject.GetComponent<CapsuleCollider>().enabled = true;
-        MeshRenderer[] renders = gameObject.GetComponentsInChildren<MeshRenderer>();
-        foreach (MeshRenderer part in renders)
-        {
-            part.enabled = true;
-        }
+        MeshRenderer rend = gameObject.GetComponentInChildren<MeshRenderer>();
+        rend.enabled = true;
     }
 	// Update is called once per frame
 	void Update () {

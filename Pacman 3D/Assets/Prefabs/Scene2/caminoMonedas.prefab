@@ -83,7 +83,6 @@ GameObject:
   - 4: {fileID: 449848}
   - 33: {fileID: 3373892}
   - 23: {fileID: 2390436}
-  - 54: {fileID: 5450804}
   - 65: {fileID: 6591598}
   m_Layer: 0
   m_Name: Plane
@@ -447,21 +446,6 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!54 &5450804
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 152602}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!54 &5487102
 Rigidbody:

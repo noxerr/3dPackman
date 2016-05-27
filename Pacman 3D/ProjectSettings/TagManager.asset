@@ -11,6 +11,7 @@ TagManager:
   - PowerUpCome
   - hierba
   - Enemy
+  - Hielo
   layers:
   - Default
   - TransparentFX

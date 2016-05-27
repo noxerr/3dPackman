@@ -14,8 +14,9 @@ public class PlayerLogic : MonoBehaviour {
     public GameObject fire, mainCameraObject;
     public Text countText, winText, finalScoreText;
 
+    private float timeAux;
     //private bool flechasLados, flechasRectas;
-    private bool colisionSuelo, colisionRampa, won, lost, translated;
+    private bool colisionSuelo, colisionHielo, colisionRampa, won, lost, translated, aumentadaSpeed;
     private int count, numTranslaciones, monedasPilladas;
     private float scoreSumado;
     private Vector3 velocidad;
@@ -33,10 +34,12 @@ public class PlayerLogic : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        aumentadaSpeed = false;
         duracionContarScore = countScoreSound.length;
         numTranslaciones = 0;
         won = lost = translated = false;
         colisionSuelo = false;
+        colisionHielo = false;
         colisionRampa = false;
         lastHitTime = Time.time;
 
@@ -52,8 +55,8 @@ public class PlayerLogic : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
 
-        rotacionInicialCamara = -35;//mainCameraObject.transform.rotation.x - 5;
-        yRelativaCamara = cameraPacScript.relativePos.y - 15;
+        rotacionInicialCamara = -45;//mainCameraObject.transform.rotation.x - 5;
+        yRelativaCamara = cameraPacScript.relativePos.y - 20;
         zRelativaCamara = cameraPacScript.relativePos.z + 35;
 
         gradosDireccion = 0;
@@ -130,6 +133,12 @@ public class PlayerLogic : MonoBehaviour {
                 rb.velocity = velocidad;
 
             }
+            else if (!aumentadaSpeed && colisionHielo == true)
+            {
+                GetComponent<Collider>().material.dynamicFriction = 0.0f;
+                rb.velocity = rb.velocity * 3;
+                aumentadaSpeed = true;
+            }
         }
         //COMPROBAR FIN PARTIDA GANADA
         else if (won)
@@ -163,7 +172,7 @@ public class PlayerLogic : MonoBehaviour {
         }
         else if (lost)
         {
-            if (rb.velocity.y < 5) rb.velocity = new Vector3(0, -250, 0);
+            if (rb.velocity.y < 5) rb.velocity = new Vector3(0, -150, 0);
             AnimacionMuerto();
         }
         //Debug.Log("pos antes: " + transform.position);
@@ -172,7 +181,7 @@ public class PlayerLogic : MonoBehaviour {
         if ((!won || translated) && !lost) gestionRotacionesPacman();
 
         //Debug.Log("Euler: " + transform.eulerAngles.y + ". gradosDireccion: " + gradosDireccion + ". oldGradosDireccion: " + oldGradosDireccion);
-        rb.AddForce(new Vector3(0.0f, -30.0f, 0.0f)); //gravedad aumentada
+        //rb.AddForce(new Vector3(0.0f, -30.0f, 0.0f)); //gravedad aumentada
     }
 
 
@@ -182,27 +191,21 @@ public class PlayerLogic : MonoBehaviour {
     {
         if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 25)
         {
+            timeAux = Mathf.Min(Time.deltaTime * 5f, 25f);
             if (gradosDireccion - oldGradosDireccion > 180)
-                transform.Rotate(0, (gradosDireccion - oldGradosDireccion - 360) * Time.deltaTime * 5, 0);
+                transform.Rotate(0, (gradosDireccion - oldGradosDireccion - 360) * timeAux, 0);
             else if (gradosDireccion - oldGradosDireccion < -180)
-                transform.Rotate(0, (gradosDireccion - oldGradosDireccion + 360) * Time.deltaTime * 5, 0);
-            else transform.Rotate(0, (gradosDireccion - oldGradosDireccion) * Time.deltaTime * 4, 0 );
+                transform.Rotate(0, (gradosDireccion - oldGradosDireccion + 360) * timeAux, 0);
+            else transform.Rotate(0, (gradosDireccion - oldGradosDireccion) * timeAux * 4/5, 0);
         }
-        else if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 12)
+        else if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 10)
         {
+            timeAux = Mathf.Min(Time.deltaTime * 0.8f, 9.8f);
             if (gradosDireccion - oldGradosDireccion > 180)
-                transform.Rotate(0, (gradosDireccion - oldGradosDireccion - 360) * Time.deltaTime * 1.8f, 0);
+                transform.Rotate(0, (gradosDireccion - oldGradosDireccion - 360) * timeAux, 0);
             else if (gradosDireccion - oldGradosDireccion < -180)
-                transform.Rotate(0, (gradosDireccion - oldGradosDireccion + 360) * Time.deltaTime * 1.8f, 0);
-            else transform.Rotate(0, (gradosDireccion - oldGradosDireccion) * Time.deltaTime * 1.5f, 0);
-        }
-        else if (Mathf.Abs(transform.eulerAngles.y - gradosDireccion) > 5)
-        {
-            if (gradosDireccion - oldGradosDireccion > 180)
-                transform.Rotate(0, (gradosDireccion - oldGradosDireccion - 360) * Time.deltaTime * 0.4f, 0);
-            else if (gradosDireccion - oldGradosDireccion < -180)
-                transform.Rotate(0, (gradosDireccion - oldGradosDireccion + 360) * Time.deltaTime * 0.4f, 0);
-            else transform.Rotate(0, (gradosDireccion - oldGradosDireccion)* Time.deltaTime * 0.4f, 0);
+                transform.Rotate(0, (gradosDireccion - oldGradosDireccion + 360) * timeAux, 0);
+            else transform.Rotate(0, (gradosDireccion - oldGradosDireccion) * timeAux, 0);
         }
     }
 
@@ -245,7 +248,7 @@ public class PlayerLogic : MonoBehaviour {
                     //para que no se choque por el camino al centro
                     boxColider.enabled = false;
                     lost = true;
-                    rb.velocity = new Vector3(0,70,0);
+                    rb.velocity = new Vector3(0,30,0);
                     transform.Translate(0,10,0, Space.World);
                 }
                 else
@@ -273,6 +276,7 @@ public class PlayerLogic : MonoBehaviour {
                 colisionRampa = true;
                 GetComponent<Collider>().material.dynamicFriction = 0;
             }
+            else if (contact.otherCollider.gameObject.tag == "Hielo") colisionHielo = true;
         } 
     }
 
@@ -286,6 +290,12 @@ public class PlayerLogic : MonoBehaviour {
             colisionRampa = false;
             GetComponent<Collider>().material.dynamicFriction = 0.5f;
         }
+        else if (collisionInfo.gameObject.tag == "Hielo")
+        {
+            colisionHielo = false;
+            aumentadaSpeed = false;
+            rb.velocity = rb.velocity / 2;
+        }
     }
 
 
@@ -293,7 +303,7 @@ public class PlayerLogic : MonoBehaviour {
     void AnimacionMuerto()
     {
         transform.Rotate(15 * Time.deltaTime * 8,
-            30 * Time.deltaTime * 8, 45 * Time.deltaTime * 8);
+            30 * Time.deltaTime * 8, -45 * Time.deltaTime * 8);
     }
 
 
