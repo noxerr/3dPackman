@@ -12,6 +12,8 @@ TagManager:
   - hierba
   - Enemy
   - Hielo
+  - Bajada
+  - Agujero
   layers:
   - Default
   - TransparentFX

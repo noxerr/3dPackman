@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerLogic : MonoBehaviour {
-    private Rigidbody rb;
+    public Rigidbody rb;
     public float constante = 25f;
     public int vidas;
     public bool godMode;
@@ -13,10 +13,13 @@ public class PlayerLogic : MonoBehaviour {
     public AudioClip destroyCoinSound, countScoreSound;
     public GameObject fire, mainCameraObject;
     public Text countText, winText, finalScoreText;
+    public float tiempoColisionSuelo;
 
     private float timeAux;
     //private bool flechasLados, flechasRectas;
-    private bool colisionSuelo, colisionHielo, colisionRampa, won, lost, translated, aumentadaSpeed;
+    public bool colisionSuelo;
+
+    private bool colisionHielo, colisionRampa, won, lost, translated, aumentadaSpeed;
     private int count, numTranslaciones, monedasPilladas;
     private float scoreSumado;
     private Vector3 velocidad;
@@ -29,11 +32,14 @@ public class PlayerLogic : MonoBehaviour {
     private BoxCollider boxColider;
     private FollowPac cameraPacScript;
     private float duracionContarScore;
-    private bool soundFinalPlayed = false;
+    private bool soundFinalPlayed = false, colisionBajada;
+    private Vector3 planeNormal;
 
 
     // Use this for initialization
     void Start () {
+        tiempoColisionSuelo = 0;
+        colisionBajada = false;
         aumentadaSpeed = false;
         duracionContarScore = countScoreSound.length;
         numTranslaciones = 0;
@@ -51,6 +57,8 @@ public class PlayerLogic : MonoBehaviour {
         GetComponent<Collider>().material.staticFriction = 0.0f;
         cameraPacScript = mainCameraObject.GetComponent<FollowPac>();
         boxColider = GetComponent<BoxCollider>();
+        boxColider.material.dynamicFriction = 0.0f;
+        boxColider.material.staticFriction = 0.0f;
         piernas = GetComponentInChildren<AnimationPiernas>();
         rb = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
@@ -87,101 +95,114 @@ public class PlayerLogic : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        //gestion hits
-        if (godMode)
+        if (transform.position.y > 90 || transform.position.y < 2)
         {
-            Parpadea();
-            float d2 = Time.time;
-            if (d2 - lastHitTime > tiempoInvencible)
+            //gestion hits
+            if (godMode)
             {
-                godMode = false;
-                tocaEsconderte = false;
-                touchRenderers(true);
+                Parpadea();
+                float d2 = Time.time;
+                if (d2 - lastHitTime > tiempoInvencible)
+                {
+                    godMode = false;
+                    tocaEsconderte = false;
+                    touchRenderers(true);
+                }
             }
+
+            //MOVER JUGADOR SI NO SE HA ACABADO LA PARTIDA
+            if (!lost && !won && tiempoColisionSuelo <= 0) logicaMovimiento();
         }
-        //MOVER JUGADOR SI NO SE HA ACABADO LA PARTIDA
-        if (!lost && !won)
+        else if (colisionBajada)
         {
-            if (colisionSuelo == true)
-            {
-                if (Input.GetKey(KeyCode.LeftArrow))
-                {
-                    velocidad = new Vector3(-1.0f * constante, rb.velocity.y, 0);
-                    if (gradosDireccion != 90) oldGradosDireccion = gradosDireccion;
-                    gradosDireccion = 90;
-                }
-                else if (Input.GetKey(KeyCode.RightArrow))
-                {
-                    velocidad = new Vector3(1.0f * constante, rb.velocity.y, 0);
-                    if (gradosDireccion != 270) oldGradosDireccion = gradosDireccion;
-                    gradosDireccion = 270;
-                }
-
-                //z moves (vertical)
-                if (Input.GetKey(KeyCode.DownArrow))
-                {
-                    velocidad = new Vector3(0, rb.velocity.y, -1.0f * constante);
-                    if (gradosDireccion != 0) oldGradosDireccion = gradosDireccion;
-                    gradosDireccion = 0;
-                }
-                else if (Input.GetKey(KeyCode.UpArrow))
-                {
-                    velocidad = new Vector3(0, rb.velocity.y, 1.0f * constante);
-                    if (gradosDireccion != 180) oldGradosDireccion = gradosDireccion;
-                    gradosDireccion = 180;
-                }
-                rb.velocity = velocidad;
-
-            }
-            else if (!aumentadaSpeed && colisionHielo == true)
-            {
-                GetComponent<Collider>().material.dynamicFriction = 0.0f;
-                rb.velocity = rb.velocity * 3;
-                aumentadaSpeed = true;
-            }
+            //rb.velocity = transform.InverseTransformDirection(Vector3.forward)*60;
+            //rb.velocity = transform.TransformDirection(-Vector3.forward*50); //el que funciona
+            rb.velocity = -planeNormal * 70;
         }
         //COMPROBAR FIN PARTIDA GANADA
-        else if (won)
-        {
-            if (!translated)
-            {
-                rb.velocity = Vector3.zero;
-                transform.Translate(translacionFinal / 60, Space.World);
-                transform.Rotate(0, 20, 0);
-                cameraPacScript.relativePos.Set(cameraPacScript.relativePos.x, cameraPacScript.relativePos.y - yRelativaCamara / 60,
-                    cameraPacScript.relativePos.z - zRelativaCamara / 60);
-                mainCameraObject.transform.Rotate(rotacionInicialCamara / 60, 0, 0);
-                if (numTranslaciones == 59) translated = true;
-                else numTranslaciones++;
-            }
-            else
-            {
-                finalScoreText.enabled = true;
-                if (!soundFinalPlayed)
-                {
-                    source.PlayOneShot(countScoreSound, 1f);
-                    soundFinalPlayed = true;
-                }
-                if (source.isPlaying) scoreSumado += Time.deltaTime * count / duracionContarScore;
-                else scoreSumado = count;
-                finalScoreText.text = "Score = " + (int)scoreSumado;
-                boxColider.enabled = true;
-                fire.SetActive(true);
-            }
-            //Debug.Log("pos win: " + transform.position);
-        }
-        else if (lost)
+        if (won) wonFunction();
+        if (lost)
         {
             if (rb.velocity.y < 5) rb.velocity = new Vector3(0, -150, 0);
             AnimacionMuerto();
         }
-        //Debug.Log("pos antes: " + transform.position);
 
         //ROTACIONES
         if ((!won || translated) && !lost) gestionRotacionesPacman();
+    }
 
-        //Debug.Log("Euler: " + transform.eulerAngles.y + ". gradosDireccion: " + gradosDireccion + ". oldGradosDireccion: " + oldGradosDireccion);
-        //rb.AddForce(new Vector3(0.0f, -30.0f, 0.0f)); //gravedad aumentada
+
+
+    void logicaMovimiento()
+    {
+        if (colisionSuelo == true)
+        {
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                velocidad = new Vector3(-1.0f * constante, rb.velocity.y, 0);
+                if (gradosDireccion != 90) oldGradosDireccion = gradosDireccion;
+                gradosDireccion = 90;
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                velocidad = new Vector3(1.0f * constante, rb.velocity.y, 0);
+                if (gradosDireccion != 270) oldGradosDireccion = gradosDireccion;
+                gradosDireccion = 270;
+            }
+
+            //z moves (vertical)
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                velocidad = new Vector3(0, rb.velocity.y, -1.0f * constante);
+                if (gradosDireccion != 0) oldGradosDireccion = gradosDireccion;
+                gradosDireccion = 0;
+            }
+            else if (Input.GetKey(KeyCode.UpArrow))
+            {
+                velocidad = new Vector3(0, rb.velocity.y, 1.0f * constante);
+                if (gradosDireccion != 180) oldGradosDireccion = gradosDireccion;
+                gradosDireccion = 180;
+            }
+            rb.velocity = velocidad;
+
+        }
+        else if (!aumentadaSpeed && colisionHielo == true)
+        {
+            GetComponent<Collider>().material.dynamicFriction = 0.0f;
+            rb.velocity = rb.velocity * 3;
+            aumentadaSpeed = true;
+        }
+    }
+
+
+
+    void wonFunction()
+    {
+        if (!translated)
+        {
+            rb.velocity = Vector3.zero;
+            transform.Translate(translacionFinal / 60, Space.World);
+            transform.Rotate(0, 20, 0);
+            cameraPacScript.relativePos.Set(cameraPacScript.relativePos.x, cameraPacScript.relativePos.y - yRelativaCamara / 60,
+                cameraPacScript.relativePos.z - zRelativaCamara / 60);
+            mainCameraObject.transform.Rotate(rotacionInicialCamara / 60, 0, 0);
+            if (numTranslaciones == 59) translated = true;
+            else numTranslaciones++;
+        }
+        else
+        {
+            finalScoreText.enabled = true;
+            if (!soundFinalPlayed)
+            {
+                source.PlayOneShot(countScoreSound, 1f);
+                soundFinalPlayed = true;
+            }
+            if (source.isPlaying) scoreSumado += Time.deltaTime * count / duracionContarScore;
+            else scoreSumado = count;
+            finalScoreText.text = "Score = " + (int)scoreSumado;
+            boxColider.enabled = true;
+            fire.SetActive(true);
+        }
     }
 
 
@@ -264,19 +285,46 @@ public class PlayerLogic : MonoBehaviour {
     }
 
 
+    void OnCollisionEnter(Collision collInfo)
+    {
+        foreach (ContactPoint contact in collInfo.contacts)
+        {
+            if (contact.otherCollider.gameObject.tag == "Rampa")
+            {
+                if (!colisionRampa)
+                {
+                    rb.velocity = -rb.velocity / 2;
+                }
+                colisionRampa = true;
+                GetComponent<Collider>().material.dynamicFriction = 0;
 
+            }
+            else if (contact.otherCollider.gameObject.tag == "Bajada")
+            {
+                colisionRampa = true;
+                GetComponent<Collider>().material.dynamicFriction = 0;
+                planeNormal = contact.otherCollider.transform.forward;
+                colisionBajada = true;
+            }
+            else if (contact.otherCollider.gameObject.tag == "Hielo") colisionHielo = true;
+            /*else if (contact.otherCollider.gameObject.tag == "Agujero")
+            {
+                getC
+            }*/
+        }
+    }
 
     void OnCollisionStay(Collision collisionInfo)
     {
         foreach (ContactPoint contact in collisionInfo.contacts)
         {
             if (contact.otherCollider.gameObject.tag == "Terrain") colisionSuelo = true;
-            else if (contact.otherCollider.gameObject.tag == "Rampa")
+            else if (contact.otherCollider.gameObject.tag == "Bajada")
             {
-                colisionRampa = true;
                 GetComponent<Collider>().material.dynamicFriction = 0;
+                planeNormal = contact.otherCollider.transform.forward;
+
             }
-            else if (contact.otherCollider.gameObject.tag == "Hielo") colisionHielo = true;
         } 
     }
 
@@ -288,14 +336,16 @@ public class PlayerLogic : MonoBehaviour {
         else if (collisionInfo.gameObject.tag == "Rampa")
         {
             colisionRampa = false;
-            GetComponent<Collider>().material.dynamicFriction = 0.5f;
+            GetComponent<Collider>().material.dynamicFriction = 0.2f;
         }
         else if (collisionInfo.gameObject.tag == "Hielo")
         {
             colisionHielo = false;
             aumentadaSpeed = false;
             rb.velocity = rb.velocity / 2;
+            GetComponent<Collider>().material.dynamicFriction = 0.2f;
         }
+        else if (collisionInfo.gameObject.tag == "Bajada") colisionBajada = false;
     }
 
 
