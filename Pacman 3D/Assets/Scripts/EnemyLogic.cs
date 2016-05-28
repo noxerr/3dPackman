@@ -6,7 +6,7 @@ public class EnemyLogic : MonoBehaviour {
     public float canBeEatenTime = 7.0f;
     public float spawnTime;
     public Transform SpawnLoc;
-    private MonoBehaviour regularIA;
+    public MonoBehaviour regularIA;
     private MonoBehaviour fleeIA;
     private float timeSinceLastEaten;
     private float timeLastDeath = -80.0f;
@@ -14,9 +14,6 @@ public class EnemyLogic : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         canBeEaten = false;
-        regularIA = gameObject.GetComponent<IASiguePac>();
-        if (!regularIA.enabled) regularIA = gameObject.GetComponent<IAPatrullaPuntos>();
-        if (regularIA == null | !regularIA.enabled) regularIA = gameObject.GetComponent<IAPredicePac>();
         fleeIA = gameObject.GetComponent<IAFlee>();
         fleeIA.enabled = false;
         timeSinceLastEaten = 0.0f;
