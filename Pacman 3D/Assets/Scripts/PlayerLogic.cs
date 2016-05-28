@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerLogic : MonoBehaviour {
@@ -9,11 +10,13 @@ public class PlayerLogic : MonoBehaviour {
     public bool godMode;
     public float tiempoInvencible = 1.5f;
     public float tiempoEntreParpadeos = 0.05f;
+    public float tiempoEnAparecerMenuWin = 3.0f;
     public int NumMonedas;
     public AudioClip destroyCoinSound, countScoreSound;
     public GameObject fire, mainCameraObject;
     public Text countText, winText, finalScoreText;
     public float tiempoColisionSuelo;
+    public Canvas winMenu;
 
     private float timeAux;
     //private bool flechasLados, flechasRectas;
@@ -23,7 +26,7 @@ public class PlayerLogic : MonoBehaviour {
     private int count, numTranslaciones, monedasPilladas;
     private float scoreSumado;
     private Vector3 velocidad;
-    private float gradosDireccion, oldGradosDireccion, lastHitTime,lastTransitionTime;
+    private float gradosDireccion, oldGradosDireccion, lastHitTime,lastTransitionTime,wonTimer;
     private bool tocaEsconderte;
     private AudioSource source;
     private Vector3 translacionFinal;
@@ -48,12 +51,11 @@ public class PlayerLogic : MonoBehaviour {
         colisionHielo = false;
         colisionRampa = false;
         lastHitTime = Time.time;
-
+        winMenu.enabled = false;
         count = 0;
         monedasPilladas = 0;
         SetCountText();
         winText.text = "";
-
         GetComponent<Collider>().material.staticFriction = 0.0f;
         cameraPacScript = mainCameraObject.GetComponent<FollowPac>();
         boxColider = GetComponent<BoxCollider>();
@@ -178,6 +180,8 @@ public class PlayerLogic : MonoBehaviour {
 
     void wonFunction()
     {
+        float d2 = Time.time;
+        if (d2 - wonTimer > tiempoEnAparecerMenuWin) winMenu.enabled = true;
         if (!translated)
         {
             rb.velocity = Vector3.zero;
@@ -355,7 +359,9 @@ public class PlayerLogic : MonoBehaviour {
         transform.Rotate(15 * Time.deltaTime * 8,
             30 * Time.deltaTime * 8, -45 * Time.deltaTime * 8);
     }
-
+    public void pasaNivel() {
+        SceneManager.LoadScene("Scene2");
+    }
 
     //GESTION MONEDAS Y PUNTUACION
     void SetCountText()
@@ -374,6 +380,7 @@ public class PlayerLogic : MonoBehaviour {
             boxColider.enabled = false;
 
             won = true;
+            wonTimer = Time.time;
 
             //vector de donde ha de ir, para despues dividirlo por el numero de frames que queremos que tarde la translacion
             translacionFinal = new Vector3(-transform.position.x, -transform.position.y+40, -transform.position.z - 30);
