@@ -22,7 +22,15 @@ public class DissableFirstFloor : MonoBehaviour {
         {
             pacLogic.colisionSuelo = false;
             pacLogic.tiempoColisionSuelo -= Time.deltaTime;
-            if (pacLogic.tiempoColisionSuelo < 0) enabled = false;
+            if (pacLogic.tiempoColisionSuelo < -0.5f)
+            {
+                MeshRenderer[] rend = primerPiso.GetComponentsInChildren<MeshRenderer>();
+                foreach (MeshRenderer mr in rend)
+                {
+                    mr.enabled = false;
+                }
+                enabled = false;
+            }
         }
         
 	}
@@ -35,11 +43,7 @@ public class DissableFirstFloor : MonoBehaviour {
         pacLogic.colisionSuelo = false;
         pacLogic.rb.velocity = Vector3.zero;
         pacLogic.tiempoColisionSuelo = 1;
-        MeshRenderer[] rend = primerPiso.GetComponentsInChildren<MeshRenderer>();
-        foreach(MeshRenderer mr in rend)
-        {
-            mr.enabled = false;
-        }
+        
     }
 
 
