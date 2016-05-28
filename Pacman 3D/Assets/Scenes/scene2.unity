@@ -5343,6 +5343,7 @@ MonoBehaviour:
   tiempoInvencible: 1.5
   tiempoEntreParpadeos: 0.09
   tiempoEnAparecerMenuWin: 3
+  tiempoEnAparecerMenuLose: 4
   NumMonedas: 200
   destroyCoinSound: {fileID: 8300000, guid: 93baeebda32f6354a8f0ea894d16374f, type: 3}
   countScoreSound: {fileID: 8300000, guid: f56407228d9408147a4054c5e16567b7, type: 3}
@@ -5353,6 +5354,7 @@ MonoBehaviour:
   finalScoreText: {fileID: 1513300870}
   tiempoColisionSuelo: 0
   winMenu: {fileID: 1750855114}
+  GameOverMenu: {fileID: 1750855114}
   colisionSuelo: 0
 --- !u!82 &828740205
 AudioSource:

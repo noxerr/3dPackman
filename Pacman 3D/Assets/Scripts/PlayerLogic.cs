@@ -11,12 +11,14 @@ public class PlayerLogic : MonoBehaviour {
     public float tiempoInvencible = 1.5f;
     public float tiempoEntreParpadeos = 0.05f;
     public float tiempoEnAparecerMenuWin = 3.0f;
+    public float tiempoEnAparecerMenuLose = 4.0f;
     public int NumMonedas;
     public AudioClip destroyCoinSound, countScoreSound;
     public GameObject fire, mainCameraObject;
     public Text countText, winText, finalScoreText;
     public float tiempoColisionSuelo;
     public Canvas winMenu;
+    public Canvas GameOverMenu;
 
     private float timeAux;
     //private bool flechasLados, flechasRectas;
@@ -26,7 +28,7 @@ public class PlayerLogic : MonoBehaviour {
     private int count, numTranslaciones, monedasPilladas;
     private float scoreSumado;
     private Vector3 velocidad;
-    private float gradosDireccion, oldGradosDireccion, lastHitTime,lastTransitionTime,wonTimer;
+    private float gradosDireccion, oldGradosDireccion, lastHitTime,lastTransitionTime,wonTimer,overTimer;
     private bool tocaEsconderte;
     private AudioSource source;
     private Vector3 translacionFinal;
@@ -52,6 +54,7 @@ public class PlayerLogic : MonoBehaviour {
         colisionRampa = false;
         lastHitTime = Time.time;
         winMenu.enabled = false;
+        GameOverMenu.enabled = false;
         count = 0;
         monedasPilladas = 0;
         SetCountText();
@@ -97,13 +100,13 @@ public class PlayerLogic : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        float d2 = Time.time;
         if (transform.position.y > 90 || transform.position.y < 2)
         {
             //gestion hits
             if (godMode)
             {
                 Parpadea();
-                float d2 = Time.time;
                 if (d2 - lastHitTime > tiempoInvencible)
                 {
                     godMode = false;
@@ -127,6 +130,7 @@ public class PlayerLogic : MonoBehaviour {
         {
             if (rb.velocity.y < 5) rb.velocity = new Vector3(0, -150, 0);
             AnimacionMuerto();
+            if (d2 - overTimer > tiempoEnAparecerMenuLose) GameOverMenu.enabled = true;
         }
 
         //ROTACIONES
@@ -273,6 +277,7 @@ public class PlayerLogic : MonoBehaviour {
                     //para que no se choque por el camino al centro
                     boxColider.enabled = false;
                     lost = true;
+                    overTimer = Time.time;
                     rb.velocity = new Vector3(0,30,0);
                     transform.Translate(0,10,0, Space.World);
                 }
