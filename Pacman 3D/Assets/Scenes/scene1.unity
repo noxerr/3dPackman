@@ -819,7 +819,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.24356619, g: 0.39190152, b: 0.625, a: 0.019607844}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0.019607844}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -5464,6 +5464,9 @@ MonoBehaviour:
   NumMonedas: 1
   destroyCoinSound: {fileID: 8300000, guid: 93baeebda32f6354a8f0ea894d16374f, type: 3}
   countScoreSound: {fileID: 8300000, guid: f56407228d9408147a4054c5e16567b7, type: 3}
+  GameOverSound: {fileID: 8300000, guid: 054850109e9fe1b4d81b96fad7ab690e, type: 3}
+  damagedSound: {fileID: 0}
+  gameOverMusic: {fileID: 8300000, guid: 67c9ca89140c8df4484616d1e1043d06, type: 3}
   fire: {fileID: 887734876}
   mainCameraObject: {fileID: 93856616}
   countText: {fileID: 1394846573}

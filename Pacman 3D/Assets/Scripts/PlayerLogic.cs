@@ -13,7 +13,8 @@ public class PlayerLogic : MonoBehaviour {
     public float tiempoEnAparecerMenuWin = 3.0f;
     public float tiempoEnAparecerMenuLose = 4.0f;
     public int NumMonedas;
-    public AudioClip destroyCoinSound, countScoreSound;
+    public AudioClip destroyCoinSound, countScoreSound,GameOverSound,damagedSound;
+    public AudioClip gameOverMusic;
     public GameObject fire, mainCameraObject;
     public Text countText, winText, finalScoreText;
     public float tiempoColisionSuelo;
@@ -130,7 +131,9 @@ public class PlayerLogic : MonoBehaviour {
         {
             if (rb.velocity.y < 5) rb.velocity = new Vector3(0, -150, 0);
             AnimacionMuerto();
-            if (d2 - overTimer > tiempoEnAparecerMenuLose) GameOverMenu.enabled = true;
+            if (d2 - overTimer > tiempoEnAparecerMenuLose) {
+                source.PlayOneShot(gameOverMusic, 1f);
+                GameOverMenu.enabled = true; }
         }
 
         //ROTACIONES
@@ -277,12 +280,14 @@ public class PlayerLogic : MonoBehaviour {
                     //para que no se choque por el camino al centro
                     boxColider.enabled = false;
                     lost = true;
+                    source.PlayOneShot(GameOverSound, 1f);
                     overTimer = Time.time;
                     rb.velocity = new Vector3(0,30,0);
                     transform.Translate(0,10,0, Space.World);
                 }
                 else
                 {
+                    source.PlayOneShot(damagedSound, 1f);
                     godMode = true;
                     tocaEsconderte = true;
                     lastTransitionTime = Time.time;
