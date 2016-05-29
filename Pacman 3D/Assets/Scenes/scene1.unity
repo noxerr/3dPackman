@@ -646,8 +646,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 74547001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 123.1, z: -152.1}
-  m_LocalScale: {x: 10, y: 10, z: 50}
+  m_LocalPosition: {x: 0, y: 123.1, z: -153.1}
+  m_LocalScale: {x: 10, y: 10, z: 45}
   m_Children: []
   m_Father: {fileID: 560794862}
   m_RootOrder: 0
@@ -712,7 +712,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 498988, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 27.8
+      value: -44.8
       objectReference: {fileID: 0}
     - target: {fileID: 498988, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
       propertyPath: m_LocalPosition.y
@@ -720,7 +720,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 498988, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -105.5
+      value: -75.3
       objectReference: {fileID: 0}
     - target: {fileID: 498988, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
       propertyPath: m_LocalRotation.x
@@ -819,7 +819,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0.019607844}
+  m_BackGroundColor: {r: 0.47145328, g: 0.50104094, b: 0.8014706, a: 0.019607844}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -5171,6 +5171,22 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 807336257}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &812079045 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100248, guid: 6e359f1fa62ee5c4290d8b8906549920, type: 2}
+  m_PrefabInternal: {fileID: 865653345}
+--- !u!114 &812079047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 812079045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d3d36727f84ef45b16b4d74a747fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  div: 0.8
 --- !u!1 &823555482
 GameObject:
   m_ObjectHideFlags: 0
@@ -5461,7 +5477,7 @@ MonoBehaviour:
   tiempoEntreParpadeos: 0.09
   tiempoEnAparecerMenuWin: 3
   tiempoEnAparecerMenuLose: 4
-  NumMonedas: 1
+  NumMonedas: 108
   destroyCoinSound: {fileID: 8300000, guid: 93baeebda32f6354a8f0ea894d16374f, type: 3}
   countScoreSound: {fileID: 8300000, guid: f56407228d9408147a4054c5e16567b7, type: 3}
   GameOverSound: {fileID: 8300000, guid: 054850109e9fe1b4d81b96fad7ab690e, type: 3}
@@ -13211,6 +13227,22 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2002204734}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2006157356 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 138860, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
+  m_PrefabInternal: {fileID: 86918092}
+--- !u!114 &2006157358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2006157356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d3d36727f84ef45b16b4d74a747fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  div: 0.4
 --- !u!1 &2008071341
 GameObject:
   m_ObjectHideFlags: 0

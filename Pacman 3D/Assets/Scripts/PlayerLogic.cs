@@ -12,7 +12,7 @@ public class PlayerLogic : MonoBehaviour {
     public float tiempoEntreParpadeos = 0.05f;
     public float tiempoEnAparecerMenuWin = 3.0f;
     public float tiempoEnAparecerMenuLose = 4.0f;
-    public int NumMonedas;
+    public int NumMonedas, monedasPilladas, count;
     public AudioClip destroyCoinSound, countScoreSound,GameOverSound,damagedSound;
     public AudioClip gameOverMusic;
     public GameObject fire, mainCameraObject;
@@ -26,7 +26,7 @@ public class PlayerLogic : MonoBehaviour {
     public bool colisionSuelo;
 
     private bool colisionHielo, colisionRampa, won, lost, translated, aumentadaSpeed;
-    private int count, numTranslaciones, monedasPilladas;
+    private int numTranslaciones;
     private float scoreSumado;
     private Vector3 velocidad;
     private float gradosDireccion, oldGradosDireccion, lastHitTime,lastTransitionTime,wonTimer,overTimer;
@@ -129,9 +129,9 @@ public class PlayerLogic : MonoBehaviour {
         if (won) wonFunction();
         if (lost)
         {
-            if (rb.velocity.y < 5) rb.velocity = new Vector3(0, -150, 0);
+            if (rb.velocity.y < 5 && rb.velocity.y > -10) rb.velocity = new Vector3(0, -120, 0);
             AnimacionMuerto();
-            if (d2 - overTimer > tiempoEnAparecerMenuLose) {
+            if (d2 - overTimer > tiempoEnAparecerMenuLose && !GameOverMenu.enabled) {
                 source.PlayOneShot(gameOverMusic, 1f);
                 GameOverMenu.enabled = true; }
         }
