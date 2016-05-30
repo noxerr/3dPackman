@@ -11,6 +11,7 @@ public class EnemyLogic : MonoBehaviour {
     private float timeSinceLastEaten;
     private float timeLastDeath = -80.0f;
     private float lastSpeed;
+    private bool dead;
 	// Use this for initialization
 	void Start () {
         canBeEaten = false;
@@ -18,6 +19,7 @@ public class EnemyLogic : MonoBehaviour {
         fleeIA.enabled = false;
         timeSinceLastEaten = 0.0f;
         lastSpeed = GetComponent<NavMeshAgent>().speed;
+        dead = false;
     }
     public void startEatenTimer() {
         timeSinceLastEaten = Time.time;
@@ -32,27 +34,31 @@ public class EnemyLogic : MonoBehaviour {
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
         MeshRenderer rend = gameObject.GetComponentInChildren<MeshRenderer>();
         rend.enabled = false;
-        
+        dead = true;
     }
     public void spawnGhost() {
         GetComponent<NavMeshAgent>().speed = lastSpeed;
         gameObject.GetComponent<CapsuleCollider>().enabled = true;
         MeshRenderer rend = gameObject.GetComponentInChildren<MeshRenderer>();
         rend.enabled = true;
+        dead = false;
     }
 	// Update is called once per frame
 	void Update () {
         float d2 = Time.time;
         if (d2 - timeSinceLastEaten > canBeEatenTime) canBeEaten = false;
         if (d2 - timeLastDeath > spawnTime) spawnGhost();
-        if (canBeEaten)
+        if (!dead)
         {
-            regularIA.enabled = false;
-            fleeIA.enabled = true;
-        }
-        else {
-            regularIA.enabled = true;
-            fleeIA.enabled = false;
+            if (canBeEaten)
+            {
+                regularIA.enabled = false;
+                fleeIA.enabled = true;
+            }
+            else {
+                regularIA.enabled = true;
+                fleeIA.enabled = false;
+            }
         }
     }
 }
