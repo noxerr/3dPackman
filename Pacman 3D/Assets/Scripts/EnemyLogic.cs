@@ -28,6 +28,7 @@ public class EnemyLogic : MonoBehaviour {
     public void killGhost() {
         timeLastDeath = Time.time;
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        gameObject.GetComponent<NavMeshAgent>().enabled = false;
         MeshRenderer rend = gameObject.GetComponentInChildren<MeshRenderer>();
         rend.enabled = false;
         regularIA.enabled = false;
@@ -37,6 +38,8 @@ public class EnemyLogic : MonoBehaviour {
     public void spawnGhost() {
         transform.position = SpawnLoc.transform.position;
         gameObject.GetComponent<CapsuleCollider>().enabled = true;
+
+        gameObject.GetComponent<NavMeshAgent>().enabled = true;
         MeshRenderer rend = gameObject.GetComponentInChildren<MeshRenderer>();
         rend.enabled = true;
         dead = false;

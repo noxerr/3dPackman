@@ -7,6 +7,7 @@ public class PlayerLogic : MonoBehaviour {
     public Rigidbody rb;
     public float constante = 25f;
     public int vidas;
+    public bool powerupComer;
     public bool godMode;
     public float tiempoInvencible = 1.5f;
     public float tiempoEntreParpadeos = 0.05f;
@@ -40,6 +41,7 @@ public class PlayerLogic : MonoBehaviour {
     private float duracionContarScore;
     private bool soundFinalPlayed = false, colisionBajada;
     private Vector3 planeNormal;
+    private float time;
 
 
     // Use this for initialization
@@ -55,6 +57,7 @@ public class PlayerLogic : MonoBehaviour {
         colisionRampa = false;
         lastHitTime = Time.time;
         winMenu.enabled = false;
+        time = 0;
         GameOverMenu.enabled = false;
         count = 0;
         monedasPilladas = 0;
@@ -88,6 +91,15 @@ public class PlayerLogic : MonoBehaviour {
         if (tocaEsconderte) touchRenderers(false);
         else touchRenderers(true);
     }
+    void hazteGrandeyPequeño()
+    {
+        if(powerupComer)
+        {
+            time += Time.deltaTime * 1.5f;
+            float value = Mathf.Sin(time)*0.25f + 1.5f;
+            transform.localScale = new Vector3(value, value, value);
+        }
+    }
     void touchRenderers(bool yesno)
     {
         MeshRenderer[] renders = gameObject.GetComponentsInChildren<MeshRenderer>();
@@ -104,6 +116,7 @@ public class PlayerLogic : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        hazteGrandeyPequeño();
         botonesDebug();
         float d2 = Time.time;
         if (transform.position.y > 90 || transform.position.y < 2)
