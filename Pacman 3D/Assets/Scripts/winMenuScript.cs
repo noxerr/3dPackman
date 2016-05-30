@@ -17,7 +17,7 @@ public class winMenuScript : MonoBehaviour {
     }
     public void resetLevel()
     {
-        SceneManager.LoadScene("Scene1");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void menuPrincipal()
     {

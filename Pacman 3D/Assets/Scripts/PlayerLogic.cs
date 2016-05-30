@@ -97,10 +97,14 @@ public class PlayerLogic : MonoBehaviour {
         }
     }
 
-
+    void botonesDebug()
+    {
+        if (Input.GetKey(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 	// Update is called once per frame
 	void Update ()
     {
+        botonesDebug();
         float d2 = Time.time;
         if (transform.position.y > 90 || transform.position.y < 2)
         {

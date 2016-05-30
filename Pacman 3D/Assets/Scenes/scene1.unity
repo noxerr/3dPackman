@@ -41,7 +41,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 6
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_LightmapsMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -66,7 +66,8 @@ LightmapSettings:
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000001, guid: d622bddd1a31e5d4e87dcd657ffb1fc6,
+    type: 2}
   m_RuntimeCPUUsage: 25
 --- !u!196 &4
 NavMeshSettings:
@@ -772,7 +773,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11448098, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
       propertyPath: spawnTime
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
@@ -5663,7 +5664,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 420634, guid: 6e359f1fa62ee5c4290d8b8906549920, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 420634, guid: 6e359f1fa62ee5c4290d8b8906549920, type: 2}
       propertyPath: m_LocalPosition.y
@@ -5671,7 +5672,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 420634, guid: 6e359f1fa62ee5c4290d8b8906549920, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 27.48
+      value: 23.96
       objectReference: {fileID: 0}
     - target: {fileID: 420634, guid: 6e359f1fa62ee5c4290d8b8906549920, type: 2}
       propertyPath: m_LocalRotation.x
@@ -8036,7 +8037,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1250343314}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
