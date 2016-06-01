@@ -775,6 +775,10 @@ Prefab:
       propertyPath: spawnTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 489832, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.81
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
   m_IsPrefabParent: 0
@@ -5718,6 +5722,10 @@ Prefab:
     - target: {fileID: 11421612, guid: 6e359f1fa62ee5c4290d8b8906549920, type: 2}
       propertyPath: spawnTime
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 423604, guid: 6e359f1fa62ee5c4290d8b8906549920, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.97
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6e359f1fa62ee5c4290d8b8906549920, type: 2}
@@ -11870,8 +11878,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1798874508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -225.3, y: 123.079575, z: -146.9}
-  m_LocalScale: {x: 10, y: 10, z: 265}
+  m_LocalPosition: {x: -225.3, y: 123.079575, z: -144.4}
+  m_LocalScale: {x: 10, y: 10, z: 267}
   m_Children: []
   m_Father: {fileID: 1642403986}
   m_RootOrder: 10
@@ -13258,7 +13266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d3d36727f84ef45b16b4d74a747fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  div: 0.4
+  div: 0.8
 --- !u!1 &2008071341
 GameObject:
   m_ObjectHideFlags: 0
