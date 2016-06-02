@@ -14,6 +14,7 @@ public class PlayerLogic : MonoBehaviour {
     public float tiempoEnAparecerMenuWin = 3.0f;
     public float tiempoEnAparecerMenuLose = 4.0f;
     public int NumMonedas, monedasPilladas, count;
+    public float tiempoPowerUp;
     public AudioClip destroyCoinSound, countScoreSound,GameOverSound,damagedSound;
     public AudioClip gameOverMusic;
     public GameObject fire, mainCameraObject;
@@ -31,6 +32,7 @@ public class PlayerLogic : MonoBehaviour {
     private float scoreSumado;
     private Vector3 velocidad;
     private float gradosDireccion, oldGradosDireccion, lastHitTime,lastTransitionTime,wonTimer,overTimer;
+    private float powerTime;
     private bool tocaEsconderte;
     private AudioSource source;
     private Vector3 translacionFinal;
@@ -71,7 +73,7 @@ public class PlayerLogic : MonoBehaviour {
         piernas = GetComponentInChildren<AnimationPiernas>();
         rb = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
-
+        powerTime = 0.0f;
         rotacionInicialCamara = -45;//mainCameraObject.transform.rotation.x - 5;
         yRelativaCamara = cameraPacScript.relativePos.y - 20;
         zRelativaCamara = cameraPacScript.relativePos.z + 35;
@@ -93,12 +95,15 @@ public class PlayerLogic : MonoBehaviour {
     }
     void hazteGrandeyPequeño()
     {
-        if(powerupComer)
+        float d2 = Time.time;
+        if (d2 - powerTime > tiempoPowerUp) powerupComer = false;
+        if (powerupComer)
         {
-            time += Time.deltaTime * 1.5f;
-            float value = Mathf.Sin(time)*0.25f + 1.5f;
-            transform.localScale = new Vector3(value, value, value);
+            time += Time.deltaTime * 8f;
+            float value = Mathf.Sin(time) * 0.25f + 1f;
+            transform.localScale = new Vector3(value, transform.localScale.y, value);
         }
+        else transform.localScale = new Vector3(1, 1, 1);
     }
     void touchRenderers(bool yesno)
     {
@@ -112,6 +117,10 @@ public class PlayerLogic : MonoBehaviour {
     void botonesDebug()
     {
         if (Input.GetKey(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (Input.GetKeyUp(KeyCode.Z)) ++vidas;
+        if (Input.GetKeyUp(KeyCode.X)) { monedasPilladas = NumMonedas;
+            SetCountText();
+        }
     }
 	// Update is called once per frame
 	void Update ()
@@ -274,6 +283,8 @@ public class PlayerLogic : MonoBehaviour {
         else if (col.gameObject.tag == "PowerUpCome")
         {
             Destroy(col.gameObject);
+            powerupComer = true;
+            powerTime = Time.time;
             EnemyLogic[] enemies = GameObject.Find("Enemies").GetComponentsInChildren<EnemyLogic>();
             foreach (EnemyLogic enemy in enemies)
             {

@@ -10901,6 +10901,7 @@ MonoBehaviour:
   NumMonedas: 200
   monedasPilladas: 0
   count: 0
+  tiempoPowerUp: 0
   destroyCoinSound: {fileID: 8300000, guid: 93baeebda32f6354a8f0ea894d16374f, type: 3}
   countScoreSound: {fileID: 8300000, guid: f56407228d9408147a4054c5e16567b7, type: 3}
   GameOverSound: {fileID: 0}
@@ -22173,7 +22174,7 @@ GameObject:
   - 136: {fileID: 1761025043}
   m_Layer: 0
   m_Name: EnemyDown
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

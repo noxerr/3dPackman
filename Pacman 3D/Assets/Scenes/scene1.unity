@@ -769,7 +769,7 @@ Prefab:
       objectReference: {fileID: 466660174}
     - target: {fileID: 11446038, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11448098, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
       propertyPath: spawnTime
@@ -778,6 +778,14 @@ Prefab:
     - target: {fileID: 489832, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
       propertyPath: m_LocalPosition.y
       value: 1.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437612, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19566470, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
+      propertyPath: m_Speed
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a39ab179d5188c4790bac06592801c8, type: 2}
@@ -5483,7 +5491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  constante: 70
+  constante: 80
   vidas: 1
   powerupComer: 0
   godMode: 0
@@ -5494,6 +5502,7 @@ MonoBehaviour:
   NumMonedas: 108
   monedasPilladas: 0
   count: 0
+  tiempoPowerUp: 7
   destroyCoinSound: {fileID: 8300000, guid: 93baeebda32f6354a8f0ea894d16374f, type: 3}
   countScoreSound: {fileID: 8300000, guid: f56407228d9408147a4054c5e16567b7, type: 3}
   GameOverSound: {fileID: 8300000, guid: 054850109e9fe1b4d81b96fad7ab690e, type: 3}
@@ -5726,6 +5735,10 @@ Prefab:
     - target: {fileID: 423604, guid: 6e359f1fa62ee5c4290d8b8906549920, type: 2}
       propertyPath: m_LocalPosition.y
       value: 1.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 19545116, guid: 6e359f1fa62ee5c4290d8b8906549920, type: 2}
+      propertyPath: m_Speed
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6e359f1fa62ee5c4290d8b8906549920, type: 2}
