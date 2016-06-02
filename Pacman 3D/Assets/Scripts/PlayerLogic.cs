@@ -23,6 +23,7 @@ public class PlayerLogic : MonoBehaviour {
     public Canvas winMenu;
     public Canvas GameOverMenu;
 
+    private Vector3 speedMin = new Vector3(1f, 1f, 1f);
     private float timeAux;
     //private bool flechasLados, flechasRectas;
     public bool colisionSuelo;
@@ -128,6 +129,7 @@ public class PlayerLogic : MonoBehaviour {
         hazteGrandeyPequeño();
         botonesDebug();
         float d2 = Time.time;
+        //COMPROBAR QUE NO ESTE EN UNA RAMPA 
         if (transform.position.y > 90 || transform.position.y < 2)
         {
             //gestion hits
@@ -145,9 +147,9 @@ public class PlayerLogic : MonoBehaviour {
             //MOVER JUGADOR SI NO SE HA ACABADO LA PARTIDA
             if (!lost && !won && tiempoColisionSuelo <= 0) logicaMovimiento();
         }
+        //SI ESTA EN LA RAMPA QUE BAJA, LE DAMOS LA VELOCIDAD PERPENDICULAR A LA NORMAL DE LA RAMPA
         else if (colisionBajada)
         {
-            //rb.velocity = transform.InverseTransformDirection(Vector3.forward)*60;
             //rb.velocity = transform.TransformDirection(-Vector3.forward*50); //el que funciona
             rb.velocity = -planeNormal * 70;
         }
@@ -170,7 +172,7 @@ public class PlayerLogic : MonoBehaviour {
 
     void logicaMovimiento()
     {
-        if (colisionSuelo == true)
+        if (colisionSuelo)
         {
             if (Input.GetKey(KeyCode.LeftArrow))
             {
@@ -206,6 +208,15 @@ public class PlayerLogic : MonoBehaviour {
             GetComponent<Collider>().material.dynamicFriction = 0.0f;
             rb.velocity = rb.velocity * 3;
             aumentadaSpeed = true;
+        }
+        else if (colisionHielo && Mathf.Abs(rb.velocity.x) < speedMin.x && Mathf.Abs(rb.velocity.z) < speedMin.z)
+        {
+            if (Mathf.Abs(velocidad.x) < 1)
+            {
+                velocidad.x = 80;
+                velocidad.z = 0;
+            }
+            rb.velocity = velocidad;
         }
     }
 
@@ -421,7 +432,9 @@ public class PlayerLogic : MonoBehaviour {
             wonTimer = Time.time;
 
             //vector de donde ha de ir, para despues dividirlo por el numero de frames que queremos que tarde la translacion
-            translacionFinal = new Vector3(-transform.position.x, -transform.position.y+40, -transform.position.z - 30);
+            if (SceneManager.GetActiveScene().name == "scene1") 
+                translacionFinal = new Vector3(-transform.position.x, -transform.position.y+40, -transform.position.z - 30);
+            else translacionFinal = new Vector3(0.13f-transform.position.x, 134.62f-transform.position.y + 30, -135.18f-transform.position.z);
             winText.text = "You Win!";
         }
     }
