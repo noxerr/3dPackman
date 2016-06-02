@@ -14,6 +14,7 @@ TagManager:
   - Hielo
   - Bajada
   - Agujero
+  - Teleport
   layers:
   - Default
   - TransparentFX

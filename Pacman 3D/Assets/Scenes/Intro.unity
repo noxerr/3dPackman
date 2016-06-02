@@ -264,6 +264,7 @@ MonoBehaviour:
   NumMonedas: 108
   monedasPilladas: 0
   count: 0
+  tiempoPowerUp: 0
   destroyCoinSound: {fileID: 8300000, guid: 93baeebda32f6354a8f0ea894d16374f, type: 3}
   countScoreSound: {fileID: 8300000, guid: f56407228d9408147a4054c5e16567b7, type: 3}
   GameOverSound: {fileID: 8300000, guid: 054850109e9fe1b4d81b96fad7ab690e, type: 3}
@@ -277,6 +278,9 @@ MonoBehaviour:
   tiempoColisionSuelo: 0
   winMenu: {fileID: 0}
   GameOverMenu: {fileID: 0}
+  vida1: {fileID: 0}
+  vida2: {fileID: 0}
+  vida3: {fileID: 0}
   colisionSuelo: 0
 --- !u!54 &734514480
 Rigidbody:

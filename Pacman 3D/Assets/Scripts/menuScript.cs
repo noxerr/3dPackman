@@ -32,7 +32,7 @@ public class menuScript : MonoBehaviour {
         exitText.enabled = true;
     }
     public void StartLevel() {
-        SceneManager.LoadScene("Scene1");
+        SceneManager.LoadScene("scene1");
     }
     public void ExitGame()
     {

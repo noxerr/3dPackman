@@ -13,11 +13,17 @@ public class winMenuScript : MonoBehaviour {
 
     public void pasaLevel()
     {
-        SceneManager.LoadScene("Scene2");
+        SceneManager.LoadScene("scene2");
     }
+    public void backToStart() {
+        SceneManager.LoadScene("scene1");
+        }
     public void resetLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void pasaCreditos() {
+        SceneManager.LoadScene("creditos");
     }
     public void menuPrincipal()
     {

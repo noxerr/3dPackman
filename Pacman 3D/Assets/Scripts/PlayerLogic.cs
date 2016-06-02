@@ -22,6 +22,7 @@ public class PlayerLogic : MonoBehaviour {
     public float tiempoColisionSuelo;
     public Canvas winMenu;
     public Canvas GameOverMenu;
+    public RawImage vida1, vida2, vida3;
 
     private Vector3 speedMin = new Vector3(1f, 1f, 1f);
     private float timeAux;
@@ -64,7 +65,6 @@ public class PlayerLogic : MonoBehaviour {
         GameOverMenu.enabled = false;
         count = 0;
         monedasPilladas = 0;
-        SetCountText();
         winText.text = "";
         GetComponent<Collider>().material.staticFriction = 0.0f;
         cameraPacScript = mainCameraObject.GetComponent<FollowPac>();
@@ -82,6 +82,13 @@ public class PlayerLogic : MonoBehaviour {
         gradosDireccion = 0;
         oldGradosDireccion = 0;
 
+        if (SceneManager.GetActiveScene().name != "scene1")
+        {
+            count = PlayerPrefs.GetInt("score", count);
+            vidas = PlayerPrefs.GetInt("vidas", vidas);
+        }
+        else vidas = 3;
+        SetCountText();
     }
 	
     void Parpadea()
@@ -113,12 +120,26 @@ public class PlayerLogic : MonoBehaviour {
         {
             part.enabled = yesno;
         }
+        if (vidas == 2) vida1.enabled = yesno;
+        else if (vidas == 1) vida2.enabled = yesno;
+        else if (vidas == 0) vida3.enabled = yesno;
     }
 
     void botonesDebug()
     {
         if (Input.GetKey(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         if (Input.GetKeyUp(KeyCode.Z)) ++vidas;
+        if (Input.GetKeyUp(KeyCode.C)) {
+            //parar animacion piernas
+            piernas.enabled = false;
+            //para que no se choque por el camino al centro
+            boxColider.enabled = false;
+            lost = true;
+            source.PlayOneShot(GameOverSound, 1f);
+            overTimer = Time.time;
+            rb.velocity = new Vector3(0, 30, 0);
+            transform.Translate(0, 10, 0, Space.World);
+        }
         if (Input.GetKeyUp(KeyCode.X)) { monedasPilladas = NumMonedas;
             SetCountText();
         }
@@ -141,6 +162,8 @@ public class PlayerLogic : MonoBehaviour {
                     godMode = false;
                     tocaEsconderte = false;
                     touchRenderers(true);
+                    if (vidas == 2) vida1.enabled = false;
+                    else if (vidas == 1) vida2.enabled = false;
                 }
             }
 
@@ -160,7 +183,7 @@ public class PlayerLogic : MonoBehaviour {
             if (rb.velocity.y < 5 && rb.velocity.y > -10) rb.velocity = new Vector3(0, -120, 0);
             AnimacionMuerto();
             if (d2 - overTimer > tiempoEnAparecerMenuLose && !GameOverMenu.enabled) {
-                source.PlayOneShot(gameOverMusic, 1f);
+                source.PlayOneShot(gameOverMusic, 0.8f);
                 GameOverMenu.enabled = true; }
         }
 
@@ -288,7 +311,14 @@ public class PlayerLogic : MonoBehaviour {
             source.PlayOneShot(destroyCoinSound, 1.0f);
             Destroy(col.gameObject);
             count += 5;
+
+            PlayerPrefs.SetInt("score", count);
             monedasPilladas += 1;
+            SetCountText();
+        }
+        else if (col.gameObject.tag == "Teleport")
+        {
+            monedasPilladas = NumMonedas;
             SetCountText();
         }
         else if (col.gameObject.tag == "PowerUpCome")
@@ -312,6 +342,7 @@ public class PlayerLogic : MonoBehaviour {
             }
             else if (!godMode) {
                 --vidas;
+                PlayerPrefs.SetInt("vidas", vidas);
                 if (vidas <= 0)
                 {
                     //parar animacion piernas
@@ -319,6 +350,7 @@ public class PlayerLogic : MonoBehaviour {
                     //para que no se choque por el camino al centro
                     boxColider.enabled = false;
                     lost = true;
+                    vida3.enabled = false;
                     source.PlayOneShot(GameOverSound, 1f);
                     overTimer = Time.time;
                     rb.velocity = new Vector3(0,30,0);
@@ -409,7 +441,7 @@ public class PlayerLogic : MonoBehaviour {
             30 * Time.deltaTime * 8, -45 * Time.deltaTime * 8);
     }
     public void pasaNivel() {
-        SceneManager.LoadScene("Scene2");
+        SceneManager.LoadScene("scene2");
     }
 
     //GESTION MONEDAS Y PUNTUACION
