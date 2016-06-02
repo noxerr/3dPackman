@@ -64,6 +64,8 @@ public class PlayerLogic : MonoBehaviour {
         time = 0;
         GameOverMenu.enabled = false;
         count = 0;
+
+        PlayerPrefs.SetInt("score", count);
         monedasPilladas = 0;
         winText.text = "";
         GetComponent<Collider>().material.staticFriction = 0.0f;
