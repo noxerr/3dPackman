@@ -23,7 +23,7 @@ public class PlayerLogic : MonoBehaviour {
     public Canvas winMenu;
     public Canvas GameOverMenu;
     public RawImage vida1, vida2, vida3;
-
+    public bool pararLogica;
     private Vector3 speedMin = new Vector3(1f, 1f, 1f);
     private float timeAux;
     //private bool flechasLados, flechasRectas;
@@ -50,6 +50,7 @@ public class PlayerLogic : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        pararLogica = false;
         tiempoColisionSuelo = 0;
         colisionBajada = false;
         aumentadaSpeed = false;
@@ -146,51 +147,58 @@ public class PlayerLogic : MonoBehaviour {
             SetCountText();
         }
     }
+
+
 	// Update is called once per frame
 	void Update ()
     {
-        hazteGrandeyPequeño();
-        botonesDebug();
-        float d2 = Time.time;
-        //COMPROBAR QUE NO ESTE EN UNA RAMPA 
-        if (transform.position.y > 90 || transform.position.y < 2)
+        if (!pararLogica)
         {
-            //gestion hits
-            if (godMode)
+            hazteGrandeyPequeño();
+            botonesDebug();
+            float d2 = Time.time;
+            //COMPROBAR QUE NO ESTE EN UNA RAMPA 
+            if (transform.position.y > 90 || transform.position.y < 2)
             {
-                Parpadea();
-                if (d2 - lastHitTime > tiempoInvencible)
+                //gestion hits
+                if (godMode)
                 {
-                    godMode = false;
-                    tocaEsconderte = false;
-                    touchRenderers(true);
-                    if (vidas == 2) vida1.enabled = false;
-                    else if (vidas == 1) vida2.enabled = false;
+                    Parpadea();
+                    if (d2 - lastHitTime > tiempoInvencible)
+                    {
+                        godMode = false;
+                        tocaEsconderte = false;
+                        touchRenderers(true);
+                        if (vidas == 2) vida1.enabled = false;
+                        else if (vidas == 1) vida2.enabled = false;
+                    }
+                }
+
+                //MOVER JUGADOR SI NO SE HA ACABADO LA PARTIDA
+                if (!lost && !won && tiempoColisionSuelo <= 0) logicaMovimiento();
+            }
+            //SI ESTA EN LA RAMPA QUE BAJA, LE DAMOS LA VELOCIDAD PERPENDICULAR A LA NORMAL DE LA RAMPA
+            else if (colisionBajada)
+            {
+                //rb.velocity = transform.TransformDirection(-Vector3.forward*50); //el que funciona
+                rb.velocity = -planeNormal * 70;
+            }
+            //COMPROBAR FIN PARTIDA GANADA
+            if (won) wonFunction();
+            if (lost)
+            {
+                if (rb.velocity.y < 5 && rb.velocity.y > -10) rb.velocity = new Vector3(0, -120, 0);
+                AnimacionMuerto();
+                if (d2 - overTimer > tiempoEnAparecerMenuLose && !GameOverMenu.enabled)
+                {
+                    source.PlayOneShot(gameOverMusic, 0.8f);
+                    GameOverMenu.enabled = true;
                 }
             }
 
-            //MOVER JUGADOR SI NO SE HA ACABADO LA PARTIDA
-            if (!lost && !won && tiempoColisionSuelo <= 0) logicaMovimiento();
+            //ROTACIONES
+            if ((!won || translated) && !lost) gestionRotacionesPacman();
         }
-        //SI ESTA EN LA RAMPA QUE BAJA, LE DAMOS LA VELOCIDAD PERPENDICULAR A LA NORMAL DE LA RAMPA
-        else if (colisionBajada)
-        {
-            //rb.velocity = transform.TransformDirection(-Vector3.forward*50); //el que funciona
-            rb.velocity = -planeNormal * 70;
-        }
-        //COMPROBAR FIN PARTIDA GANADA
-        if (won) wonFunction();
-        if (lost)
-        {
-            if (rb.velocity.y < 5 && rb.velocity.y > -10) rb.velocity = new Vector3(0, -120, 0);
-            AnimacionMuerto();
-            if (d2 - overTimer > tiempoEnAparecerMenuLose && !GameOverMenu.enabled) {
-                source.PlayOneShot(gameOverMusic, 0.8f);
-                GameOverMenu.enabled = true; }
-        }
-
-        //ROTACIONES
-        if ((!won || translated) && !lost) gestionRotacionesPacman();
     }
 
 
