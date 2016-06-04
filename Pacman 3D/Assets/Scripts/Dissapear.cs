@@ -5,15 +5,18 @@ public class Dissapear : MonoBehaviour {
     public GameObject pacman, puntoAround, camara, fant1, fant2;
     public int MonedasAntesCueva;
     private PlayerLogic logica;
-    private bool animate, finishAnimate, camaraAnimada, animarCamara;
+    private bool animate, finishAnimate, camaraAnimada, animarCamara, loseTime;
     private int count, finCount, countCamera;
     private Vector3 posInicialCamara, posPuertaCamara;
     private float rotacionAntes, rotacionDurante;
+    private float time;
+    public AudioClip musicOpenPuerta;
+    private AudioSource source;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         logica = pacman.GetComponent<PlayerLogic>();
-        posPuertaCamara = new Vector3(-2.5f, 165, -243.7f);
+        posPuertaCamara = new Vector3(-2.5f, 115, -283.7f);
         animate = false;
         finishAnimate = false;
         camaraAnimada = false;
@@ -23,17 +26,24 @@ public class Dissapear : MonoBehaviour {
         count = 0;
         countCamera = 0;
         finCount = 90 / 3; //grados que giramos en total, entre los k giramos por segundo
-	}
+        time = 0;
+        loseTime = true;
+        source = GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 	    if (logica.monedasPilladas >= MonedasAntesCueva && !animate && !finishAnimate){
             //finishAnimate = true;
-            posInicialCamara = camara.transform.position;
+
+
+            source.PlayOneShot(musicOpenPuerta, 1f);
             animate = true;
             animarCamara = true;
+            pacman.GetComponent<PlayerLogic>().rb.velocity = Vector3.zero;
             pacman.GetComponent<PlayerLogic>().pararLogica = true;
             camara.GetComponent<FollowPac>().enabled = false;
+            posInicialCamara = camara.transform.position;
             fant1.SetActive(false);
             fant2.SetActive(false);
         }
@@ -43,7 +53,7 @@ public class Dissapear : MonoBehaviour {
             if (countCamera < (rotacionAntes - rotacionDurante))
             {
                 camara.transform.Rotate(Vector3.right, -1);
-                camara.transform.Translate((posPuertaCamara - posInicialCamara) / (rotacionAntes - rotacionDurante));
+                camara.transform.Translate((posPuertaCamara - posInicialCamara) / (rotacionAntes - rotacionDurante), Space.World);
             }
             else animarCamara = false;
             countCamera++;
@@ -58,12 +68,17 @@ public class Dissapear : MonoBehaviour {
                 countCamera = 0;
             }
         }
+        else if (!camaraAnimada && finishAnimate && loseTime)
+        {
+            time += Time.deltaTime;
+            if (time >= 0.75f) loseTime = false; 
+        }
         else if (!camaraAnimada && finishAnimate)
         {
             if (countCamera < (rotacionAntes - rotacionDurante))
             {
                 camara.transform.Rotate(Vector3.right, 1);
-                camara.transform.Translate((-posPuertaCamara + posInicialCamara) / (rotacionAntes - rotacionDurante));
+                camara.transform.Translate((-posPuertaCamara + posInicialCamara) / (rotacionAntes - rotacionDurante), Space.World);
             }
             else camaraAnimada = true;
             countCamera++;

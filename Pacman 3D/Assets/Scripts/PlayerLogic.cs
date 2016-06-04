@@ -16,7 +16,7 @@ public class PlayerLogic : MonoBehaviour {
     public int NumMonedas, monedasPilladas, count;
     public float tiempoPowerUp;
     public AudioClip destroyCoinSound, countScoreSound,GameOverSound,damagedSound;
-    public AudioClip gameOverMusic;
+    public AudioClip gameOverMusic,music1,winMusic;
     public GameObject fire, mainCameraObject;
     public Text countText, winText, finalScoreText;
     public float tiempoColisionSuelo;
@@ -65,8 +65,7 @@ public class PlayerLogic : MonoBehaviour {
         time = 0;
         GameOverMenu.enabled = false;
         count = 0;
-
-        PlayerPrefs.SetInt("score", count);
+        
         monedasPilladas = 0;
         winText.text = "";
         GetComponent<Collider>().material.staticFriction = 0.0f;
@@ -84,13 +83,18 @@ public class PlayerLogic : MonoBehaviour {
 
         gradosDireccion = 0;
         oldGradosDireccion = 0;
-
+        source.PlayOneShot(music1, 0.5f);
         if (SceneManager.GetActiveScene().name != "scene1")
         {
             count = PlayerPrefs.GetInt("score", count);
             vidas = PlayerPrefs.GetInt("vidas", vidas);
+            if (vidas <= 2) vida1.enabled = false;
+            if (vidas <= 1) vida2.enabled = false;
         }
-        else vidas = 3;
+        else { vidas = 3;
+
+             PlayerPrefs.SetInt("vidas", vidas);
+            PlayerPrefs.SetInt("score", count); }
         SetCountText();
     }
 	
@@ -146,6 +150,7 @@ public class PlayerLogic : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.X)) { monedasPilladas = NumMonedas;
             SetCountText();
         }
+        if (Input.GetKeyUp(KeyCode.V)) { monedasPilladas = 117; }
     }
 
 
@@ -278,7 +283,7 @@ public class PlayerLogic : MonoBehaviour {
                 source.PlayOneShot(countScoreSound, 1f);
                 soundFinalPlayed = true;
             }
-            if (source.isPlaying) scoreSumado += Time.deltaTime * count / duracionContarScore;
+            if (source.isPlaying && scoreSumado < count) scoreSumado += Time.deltaTime * count / duracionContarScore;
             else scoreSumado = count;
             finalScoreText.text = "Score = " + (int)scoreSumado;
             boxColider.enabled = true;
@@ -323,6 +328,7 @@ public class PlayerLogic : MonoBehaviour {
             count += 5;
 
             PlayerPrefs.SetInt("score", count);
+
             monedasPilladas += 1;
             SetCountText();
         }
@@ -471,6 +477,8 @@ public class PlayerLogic : MonoBehaviour {
             boxColider.enabled = false;
 
             won = true;
+            source.Stop();
+            source.PlayOneShot(winMusic, 0.5f);
             wonTimer = Time.time;
 
             //vector de donde ha de ir, para despues dividirlo por el numero de frames que queremos que tarde la translacion

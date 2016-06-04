@@ -13623,8 +13623,10 @@ MonoBehaviour:
   destroyCoinSound: {fileID: 8300000, guid: 93baeebda32f6354a8f0ea894d16374f, type: 3}
   countScoreSound: {fileID: 8300000, guid: f56407228d9408147a4054c5e16567b7, type: 3}
   GameOverSound: {fileID: 8300000, guid: 054850109e9fe1b4d81b96fad7ab690e, type: 3}
-  damagedSound: {fileID: 0}
+  damagedSound: {fileID: 8300000, guid: fa81eb86f7e1a9940ba33d01b5e37729, type: 3}
   gameOverMusic: {fileID: 8300000, guid: 67c9ca89140c8df4484616d1e1043d06, type: 3}
+  music1: {fileID: 8300000, guid: 8c732868e0926df459057afb01947147, type: 3}
+  winMusic: {fileID: 8300000, guid: 79cf75747cd9a8947a466ef75057b692, type: 3}
   fire: {fileID: 887734876}
   mainCameraObject: {fileID: 93856616}
   countText: {fileID: 1394846573}
@@ -32945,7 +32947,82 @@ MonoBehaviour:
   camara: {fileID: 93856616}
   fant1: {fileID: 488228655}
   fant2: {fileID: 1529050734}
-  MonedasAntesCueva: 30
+  MonedasAntesCueva: 117
+  musicOpenPuerta: {fileID: 8300000, guid: b47fc6ab94bbfe349bf176246ff362d7, type: 3}
+--- !u!82 &2044204800
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2044204794}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &2047454916
 GameObject:
   m_ObjectHideFlags: 0
